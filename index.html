@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workato Labs — Developer Toolkit</title>
+<link href="https://fonts.googleapis.com/css2?family=Besley:wght@400;600;700&family=Nunito+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --w-hero-teal: #67EADD;
+    --w-dark-teal: #21DBC8;
+    --w-light-teal: #B3FEF7;
+    --w-dark-blue: #083763;
+    --w-deep-blue: #062D52;
+    --w-royal-blue: #1D60CA;
+    --w-medium-blue: #69D2FF;
+    --w-baby-blue: #D3EEFA;
+    --w-sand: #F4F2E3;
+    --w-gray: #F2F2F2;
+    --w-dewy-purple: #C4A5DE;
+    --w-pink: #FF69B4;
+    --w-lime: #BFFF00;
+    --w-font-display: 'Besley', Georgia, serif;
+    --w-font-body: 'Nunito Sans', system-ui, sans-serif;
+    --w-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--w-dark-blue);
+    color: #fff;
+    font-family: var(--w-font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Layout ─── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .container--wide {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ─── Decorative flair line ─── */
+  .teal-rule {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--w-hero-teal) 20%, var(--w-hero-teal) 80%, transparent 100%);
+    opacity: 0.4;
+  }
+
+  /* ─── Nav ─── */
+  nav {
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  nav .logo svg { height: 24px; width: auto; }
+
+  nav .logo .labs-badge {
+    font-family: var(--w-font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--w-dark-blue);
+    background: var(--w-hero-teal);
+    padding: 3px 10px 2px;
+    border-radius: 4px;
+    line-height: 1;
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  nav .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  nav .nav-links a:hover { color: var(--w-hero-teal); }
+
+  /* ─── Hero ─── */
+  .hero {
+    padding: 80px 0 72px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-family: var(--w-font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 .teal { color: var(--w-hero-teal); }
+  .hero h1 .pink { color: var(--w-pink); }
+
+  .hero .subtitle {
+    font-size: 19px;
+    color: rgba(255,255,255,0.75);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .hero .cta-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: var(--w-font-body);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn--primary {
+    background: var(--w-hero-teal);
+    color: var(--w-dark-blue);
+  }
+
+  .btn--primary:hover {
+    background: var(--w-dark-teal);
+    transform: translateY(-1px);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--w-hero-teal);
+    border: 1.5px solid rgba(103, 234, 221, 0.4);
+  }
+
+  .btn--ghost:hover {
+    border-color: var(--w-hero-teal);
+    background: rgba(103, 234, 221, 0.06);
+  }
+
+  /* ─── Version badge ─── */
+  .version-banner {
+    text-align: center;
+    padding-bottom: 64px;
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--w-font-mono);
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 6px 16px;
+  }
+
+  .version-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--w-hero-teal);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ─── What's in the box ─── */
+  .toolkit-section {
+    padding: 80px 0;
+  }
+
+  .section-label {
+    font-family: var(--w-font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--w-hero-teal);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--w-font-display);
+    font-size: clamp(28px, 3.5vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    color: rgba(255,255,255,0.7);
+    font-size: 17px;
+    max-width: 600px;
+    margin-bottom: 48px;
+    line-height: 1.65;
+  }
+
+  /* Tool cards */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .tool-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 28px 26px;
+    transition: all 0.25s;
+  }
+
+  .tool-card:hover {
+    border-color: rgba(103, 234, 221, 0.2);
+    background: rgba(103, 234, 221, 0.03);
+  }
+
+  .tool-card .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .tool-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
+  .tool-icon--teal { background: rgba(103, 234, 221, 0.12); color: var(--w-hero-teal); }
+  .tool-icon--purple { background: rgba(196, 165, 222, 0.12); color: var(--w-dewy-purple); }
+  .tool-icon--blue { background: rgba(105, 210, 255, 0.12); color: var(--w-medium-blue); }
+  .tool-icon--lime { background: rgba(191, 255, 0, 0.1); color: var(--w-lime); }
+  .tool-icon--pink { background: rgba(255, 105, 180, 0.1); color: var(--w-pink); }
+
+  .tool-card h3 {
+    font-family: var(--w-font-body);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .tool-card .tool-tag {
+    font-family: var(--w-font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    margin-left: auto;
+  }
+
+  .tool-card p {
+    color: rgba(255,255,255,0.6);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .tool-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  /* ─── Install section ─── */
+  .install-section {
+    padding: 80px 0;
+  }
+
+  .install-steps {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .install-step {
+    padding: 28px 32px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .install-step:last-child { border-bottom: none; }
+
+  .step-number {
+    font-family: var(--w-font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--w-hero-teal);
+    background: rgba(103, 234, 221, 0.08);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content { flex: 1; min-width: 0; }
+
+  .step-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .step-content .step-desc {
+    color: rgba(255,255,255,0.5);
+    font-size: 13.5px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .code-block {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: var(--w-font-mono);
+    font-size: 13.5px;
+    color: var(--w-hero-teal);
+    overflow-x: auto;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  .code-block .comment {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .code-block .flag {
+    color: var(--w-medium-blue);
+  }
+
+  .code-block .string {
+    color: var(--w-lime);
+  }
+
+  .code-block .cmd {
+    color: #fff;
+  }
+
+  .code-block .prompt {
+    color: rgba(255,255,255,0.3);
+    user-select: none;
+  }
+
+  .prereq-note {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 8px;
+  }
+
+  .prereq-note a {
+    color: var(--w-hero-teal);
+    text-decoration: none;
+  }
+
+  .prereq-note a:hover { text-decoration: underline; }
+
+  /* ─── Workflow diagram ─── */
+  .workflow-section {
+    padding: 64px 0 80px;
+  }
+
+  .workflow-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 40px 24px;
+    background: rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    margin-top: 40px;
+  }
+
+  .wf-node {
+    text-align: center;
+    padding: 16px 20px;
+    min-width: 120px;
+  }
+
+  .wf-node .wf-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+    font-size: 20px;
+  }
+
+  .wf-node .wf-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .wf-node .wf-tool {
+    font-family: var(--w-font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 2px;
+  }
+
+  .wf-arrow {
+    color: rgba(255,255,255,0.15);
+    font-size: 24px;
+    padding: 0 4px;
+  }
+
+  /* ─── Repos section ─── */
+  .repos-section {
+    padding: 80px 0;
+  }
+
+  .repo-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .repo-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.2s;
+  }
+
+  .repo-link:hover {
+    border-color: rgba(103, 234, 221, 0.25);
+    background: rgba(103, 234, 221, 0.03);
+  }
+
+  .repo-link .repo-icon {
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  .repo-link .repo-name {
+    font-family: var(--w-font-mono);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--w-hero-teal);
+  }
+
+  .repo-link .repo-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    padding: 48px 0;
+    text-align: center;
+  }
+
+  footer .footer-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.7;
+  }
+
+  footer .footer-text a {
+    color: var(--w-hero-teal);
+    text-decoration: none;
+  }
+
+  footer .footer-text a:hover { text-decoration: underline; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 680px) {
+    .tool-grid { grid-template-columns: 1fr; }
+    .tool-card--wide { grid-column: auto; }
+    .repo-list { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+    .hero { padding: 56px 0 48px; }
+    .workflow-visual { flex-direction: column; gap: 4px; }
+    .wf-arrow { transform: rotate(90deg); }
+    .install-step { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ────────── Nav ────────── -->
+<div class="container--wide">
+  <nav>
+    <a href="#" class="logo">
+      <svg viewBox="0 0 127 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="16" fill="#67EADD" font-family="'Nunito Sans', sans-serif" font-weight="700" font-size="18">workato</text>
+      </svg>
+      <span class="labs-badge">Labs</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#install">Install</a></li>
+      <li><a href="#toolkit">Toolkit</a></li>
+      <li><a href="#repos">Repos</a></li>
+      <li><a href="https://github.com/workato-devs/labs/discussions">Discuss</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Hero ────────── -->
+<div class="container">
+  <section class="hero">
+    <h1>
+      <span class="pink">Build</span> recipes with<br>
+      AI agents that <span class="teal">actually work</span>
+    </h1>
+    <p class="subtitle">
+      An open-source developer toolkit for building, validating, visualizing, and managing Workato recipes — designed for humans and coding agents alike.
+    </p>
+    <div class="cta-row">
+      <a href="#install" class="btn btn--primary">Get started</a>
+      <a href="https://github.com/workato-devs/labs" class="btn btn--ghost">
+        <img src="./assets/icon-github.svg" width="16" height="16" alt="">
+        GitHub
+      </a>
+    </div>
+  </section>
+
+  <div class="version-banner">
+    <span class="version-badge">
+      <span class="dot"></span>
+      Beta — Design Partner Program
+    </span>
+  </div>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Workflow ────────── -->
+<div class="container--wide">
+  <section class="workflow-section" id="workflow">
+    <div class="container">
+      <span class="section-label">The workflow</span>
+      <h2 class="section-title">From prompt to production</h2>
+      <p class="section-desc">Four tools that replace the loop of guess, push, break, repeat.</p>
+    </div>
+    <div class="workflow-visual">
+      <div class="wf-node">
+        <div class="wf-icon tool-icon--teal">✎</div>
+        <div class="wf-label">Agent writes recipe</div>
+        <div class="wf-tool">recipe-skills</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node">
+        <div class="wf-icon tool-icon--purple"><img src="./assets/icon-visualizer.svg" width="20" height="20" alt=""></div>
+        <div class="wf-label">Developer inspects</div>
+        <div class="wf-tool">visualizer</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node">
+        <div class="wf-icon tool-icon--lime">✓</div>
+        <div class="wf-label">Linter validates</div>
+        <div class="wf-tool">wk lint</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node">
+        <div class="wf-icon tool-icon--blue">⇧</div>
+        <div class="wf-label">CLI pushes</div>
+        <div class="wf-tool">wk push</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Install ────────── -->
+<div class="container">
+  <section class="install-section" id="install">
+    <span class="section-label">Get started</span>
+    <h2 class="section-title">Install the toolkit</h2>
+    <p class="section-desc">
+      Five steps, each using a command you already know. No install scripts, no ambient dependencies, no magic.
+    </p>
+
+    <div class="install-steps">
+
+      <div class="install-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h4>Install the CLI</h4>
+          <p class="step-desc">The <code>wk</code> binary — workspace operations, recipe management, and plugin system. Single binary, no dependencies.</p>
+          <div class="code-block">
+            <span class="comment"># Download the binary for your platform from Releases, then:</span><br>
+            <span class="prompt">$ </span><span class="cmd">tar xzf</span> <span class="string">wk_*.tar.gz</span><br>
+            <span class="prompt">$ </span><span class="cmd">sudo mv</span> wk <span class="string">/usr/local/bin/</span><br>
+            <span class="prompt">$ </span><span class="cmd">wk</span> <span class="flag">--version</span>
+          </div>
+          <p class="prereq-note"><a href="https://github.com/workato-devs/wk-cli-beta/releases">Download from Releases →</a></p>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h4>Install the recipe linter</h4>
+          <p class="step-desc">Deterministic validation — catches errors that agent self-validation misses. Single binary, no dependencies.</p>
+          <div class="code-block">
+            <span class="comment"># Download the binary for your platform from Releases, then:</span><br>
+            <span class="prompt">$ </span><span class="cmd">tar xzf</span> <span class="string">wk-lint_*.tar.gz</span><br>
+            <span class="prompt">$ </span><span class="cmd">sudo mv</span> wk-lint <span class="string">/usr/local/bin/</span>
+          </div>
+          <p class="prereq-note"><a href="https://github.com/workato-devs/wk-lint-beta/releases">Download from Releases →</a></p>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h4>Connect the linter to the CLI</h4>
+          <p class="step-desc">Registers the recipe linter as a <code>wk</code> plugin so you can run validation from the CLI.</p>
+          <div class="code-block">
+            <span class="prompt">$ </span><span class="cmd">wk install</span> <span class="string">recipes-lint</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h4>Clone the recipe skills</h4>
+          <p class="step-desc">Agent-consumable knowledge for recipe authoring — connector config, datapill syntax, control flow, schemas. Also where connector-specific lint rules live. Point your coding agent here.</p>
+          <div class="code-block">
+            <span class="prompt">$ </span><span class="cmd">git clone</span> <span class="string">https://github.com/workato-devs/recipe-skills.git</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h4>Install the recipe visualizer</h4>
+          <p class="step-desc">IDE extension that renders recipe JSON as interactive workflow graphs. Works in VS Code, Cursor, and Windsurf.</p>
+          <div class="code-block">
+            <span class="comment"># Download the .vsix from this repo's downloads folder, then:</span><br>
+            <span class="prompt">$ </span><span class="cmd">code</span> <span class="flag">--install-extension</span> <span class="string">./recipe-visualizer-0.5.2.vsix</span><br>
+            <br>
+            <span class="comment"># Or for Cursor:</span><br>
+            <span class="prompt">$ </span><span class="cmd">cursor</span> <span class="flag">--install-extension</span> <span class="string">./recipe-visualizer-0.5.2.vsix</span>
+          </div>
+          <p class="prereq-note"><a href="https://github.com/workato-devs/labs/tree/main/downloads">Download .vsix →</a></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Toolkit detail ────────── -->
+<div class="container">
+  <section class="toolkit-section" id="toolkit">
+    <span class="section-label">What's in the box</span>
+    <h2 class="section-title">Four tools, one workflow</h2>
+    <p class="section-desc">
+      Each tool covers a piece of the developer lifecycle. Together, they replace manual recipe wrangling with an agent-native development flow.
+    </p>
+
+    <div class="tool-grid">
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--teal">⌘</div>
+          <h3>wk CLI</h3>
+          <span class="tool-tag">Go</span>
+        </div>
+        <p>Single binary, zero dependencies. <code>wk pull</code>, <code>wk push</code>, <code>wk diff</code>, and <code>wk status</code> across workspaces. Plugin system for extending with custom commands.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--lime">✓</div>
+          <h3>Recipe Linter</h3>
+          <span class="tool-tag">Go</span>
+        </div>
+        <p>Deterministic validation compiled into <code>wk lint</code>. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--blue">✎</div>
+          <h3>Recipe Skills</h3>
+          <span class="tool-tag">7 connectors</span>
+        </div>
+        <p>Agent-consumable knowledge for recipe authoring. Connector config, datapill syntax, control flow, error handling. Also home to connector-specific lint rules. Point your coding agent at the skills directory.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--purple"><img src="./assets/icon-visualizer.svg" width="18" height="18" alt=""></div>
+          <h3>Recipe Visualizer</h3>
+          <span class="tool-tag">.vsix</span>
+        </div>
+        <p>IDE extension rendering recipe JSON as interactive workflow graphs. Click a node, navigate to the source. Export graphs as images. VS Code, Cursor, Windsurf.</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Repos ────────── -->
+<div class="container">
+  <section class="repos-section" id="repos">
+    <span class="section-label">Source</span>
+    <h2 class="section-title">Repositories</h2>
+
+    <div class="repo-list">
+      <a href="https://github.com/workato-devs/labs" class="repo-link">
+        <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
+        <div>
+          <div class="repo-name">workato-labs</div>
+          <div class="repo-desc">Hub — docs, downloads, .vsix extensions</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/workato-devs/wk-cli-beta" class="repo-link">
+        <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
+        <div>
+          <div class="repo-name">wk</div>
+          <div class="repo-desc">CLI — Go binary, workspace ops</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/workato-devs/recipe-skills" class="repo-link">
+        <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
+        <div>
+          <div class="repo-name">recipe-skills</div>
+          <div class="repo-desc">Agent knowledge — 7 connector skill sets</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/workato-devs/wk-lint-beta" class="repo-link">
+        <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
+        <div>
+          <div class="repo-name">wk-lint</div>
+          <div class="repo-desc">Recipe linter — deterministic validation</div>
+        </div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Footer ────────── -->
+<footer>
+  <div class="container">
+    <p class="footer-text">
+      Workato Labs is an open-source initiative from Workato.<br>
+      Community feedback welcome, no SLA. <a href="https://github.com/workato-devs/labs/discussions">Join the conversation →</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

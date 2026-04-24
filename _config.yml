@@ -1,0 +1,10 @@
+title: Workato Labs
+description: An open-source developer toolkit for building, validating, visualizing, and managing Workato recipes.
+url: https://workato-devs.github.io
+baseurl: /labs
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
