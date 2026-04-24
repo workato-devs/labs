@@ -18,42 +18,42 @@ Four tools that replace the loop of guess, push, break, repeat.
 
 ## Install the toolkit
 
-Five steps, each using a command you already know. No install scripts, no ambient dependencies, no magic.
+Four steps, each using a command you already know. No install scripts, no ambient dependencies, no magic.
 
 ### 1. Install the CLI
 
 The `wk` binary — workspace operations, recipe management, and plugin system. Single binary, no dependencies.
 
 ```bash
-# Download the binary for your platform from Releases, then:
-tar xzf wk_*.tar.gz
-sudo mv wk /usr/local/bin/
-wk --version
+# Download and extract the binary for your platform from Releases, then:
+xattr -d com.apple.quarantine /path/to/wk      # macOS: allow the binary to run
+sudo mv /path/to/wk /usr/local/bin/
+wk version
 ```
+
+> **Tip:** Right-click the extracted binary in Finder and hold Option to copy its full path.
 
 📦 [Download from Releases →](https://github.com/workato-devs/wk-cli-beta/releases)
 
 ### 2. Install the recipe linter
 
-Deterministic validation — catches errors that agent self-validation misses. Single binary, no dependencies.
+Deterministic validation — catches errors that agent self-validation misses. Download and extract the archive, move it to a permanent location, symlink the binary onto your PATH, then register it as a `wk` plugin.
 
 ```bash
-# Download the binary for your platform from Releases, then:
-tar xzf wk-lint_*.tar.gz
-sudo mv wk-lint /usr/local/bin/
+# Download and extract the archive for your platform from Releases.
+# The binary inside is named recipe-lint (not wk-lint).
+xattr -d com.apple.quarantine /path/to/recipe-lint           # macOS: allow the binary to run
+sudo mv /path/to/extracted-folder /usr/local/lib/recipe-lint  # move to a permanent location
+sudo ln -s /usr/local/lib/recipe-lint/recipe-lint /usr/local/bin/recipe-lint  # symlink so wk can find the plugin
+wk plugins install recipe-lint
+which recipe-lint
 ```
+
+> **Tip:** Right-click the extracted binary in Finder and hold Option to copy its full path.
 
 📦 [Download from Releases →](https://github.com/workato-devs/wk-lint-beta/releases)
 
-### 3. Connect the linter to the CLI
-
-Registers the recipe linter as a `wk` plugin so you can run validation from the CLI.
-
-```bash
-wk install recipes-lint
-```
-
-### 4. Clone the recipe skills
+### 3. Clone the recipe skills
 
 Agent-consumable knowledge for recipe authoring — connector config, datapill syntax, control flow, schemas. Also where connector-specific lint rules live. Point your coding agent here.
 
@@ -61,7 +61,7 @@ Agent-consumable knowledge for recipe authoring — connector config, datapill s
 git clone https://github.com/workato-devs/recipe-skills.git
 ```
 
-### 5. Install the recipe visualizer
+### 4. Install the recipe visualizer
 
 IDE extension that renders recipe JSON as interactive workflow graphs. Works in VS Code, Cursor, and Windsurf.
 

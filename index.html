@@ -632,7 +632,7 @@
     <span class="section-label">Get started</span>
     <h2 class="section-title">Install the toolkit</h2>
     <p class="section-desc">
-      Five steps, each using a command you already know. No install scripts, no ambient dependencies, no magic.
+      Four steps, each using a command you already know. No install scripts, no ambient dependencies, no magic.
     </p>
 
     <div class="install-steps">
@@ -643,11 +643,12 @@
           <h4>Install the CLI</h4>
           <p class="step-desc">The <code>wk</code> binary — workspace operations, recipe management, and plugin system. Single binary, no dependencies.</p>
           <div class="code-block">
-            <span class="comment"># Download the binary for your platform from Releases, then:</span><br>
-            <span class="prompt">$ </span><span class="cmd">tar xzf</span> <span class="string">wk_*.tar.gz</span><br>
-            <span class="prompt">$ </span><span class="cmd">sudo mv</span> wk <span class="string">/usr/local/bin/</span><br>
-            <span class="prompt">$ </span><span class="cmd">wk</span> <span class="flag">--version</span>
+            <span class="comment"># Download and extract the binary for your platform from Releases, then:</span><br>
+            <span class="prompt">$ </span><span class="cmd">xattr</span> <span class="flag">-d</span> com.apple.quarantine <span class="string">/path/to/wk</span><br>
+            <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/wk</span> <span class="string">/usr/local/bin/</span><br>
+            <span class="prompt">$ </span><span class="cmd">wk</span> version
           </div>
+          <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
           <p class="prereq-note"><a href="https://github.com/workato-devs/wk-cli-beta/releases">Download from Releases →</a></p>
         </div>
       </div>
@@ -656,29 +657,23 @@
         <div class="step-number">2</div>
         <div class="step-content">
           <h4>Install the recipe linter</h4>
-          <p class="step-desc">Deterministic validation — catches errors that agent self-validation misses. Single binary, no dependencies.</p>
+          <p class="step-desc">Deterministic validation — catches errors that agent self-validation misses. Download and extract the archive, move it to a permanent location, symlink the binary onto your PATH, then register it as a <code>wk</code> plugin.</p>
           <div class="code-block">
-            <span class="comment"># Download the binary for your platform from Releases, then:</span><br>
-            <span class="prompt">$ </span><span class="cmd">tar xzf</span> <span class="string">wk-lint_*.tar.gz</span><br>
-            <span class="prompt">$ </span><span class="cmd">sudo mv</span> wk-lint <span class="string">/usr/local/bin/</span>
+            <span class="comment"># Download and extract the archive for your platform from Releases.</span><br>
+            <span class="comment"># The binary inside is named recipe-lint (not wk-lint).</span><br>
+            <span class="prompt">$ </span><span class="cmd">xattr</span> <span class="flag">-d</span> com.apple.quarantine <span class="string">/path/to/recipe-lint</span><br>
+            <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/extracted-folder</span> <span class="string">/usr/local/lib/recipe-lint</span><br>
+            <span class="prompt">$ </span><span class="cmd">sudo ln</span> <span class="flag">-s</span> <span class="string">/usr/local/lib/recipe-lint/recipe-lint</span> <span class="string">/usr/local/bin/recipe-lint</span>  <span class="comment"># symlink so wk can find the plugin</span><br>
+            <span class="prompt">$ </span><span class="cmd">wk plugins install</span> recipe-lint<br>
+            <span class="prompt">$ </span><span class="cmd">which</span> recipe-lint
           </div>
+          <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
           <p class="prereq-note"><a href="https://github.com/workato-devs/wk-lint-beta/releases">Download from Releases →</a></p>
         </div>
       </div>
 
       <div class="install-step">
         <div class="step-number">3</div>
-        <div class="step-content">
-          <h4>Connect the linter to the CLI</h4>
-          <p class="step-desc">Registers the recipe linter as a <code>wk</code> plugin so you can run validation from the CLI.</p>
-          <div class="code-block">
-            <span class="prompt">$ </span><span class="cmd">wk install</span> <span class="string">recipes-lint</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="install-step">
-        <div class="step-number">4</div>
         <div class="step-content">
           <h4>Clone the recipe skills</h4>
           <p class="step-desc">Agent-consumable knowledge for recipe authoring — connector config, datapill syntax, control flow, schemas. Also where connector-specific lint rules live. Point your coding agent here.</p>
@@ -689,7 +684,7 @@
       </div>
 
       <div class="install-step">
-        <div class="step-number">5</div>
+        <div class="step-number">4</div>
         <div class="step-content">
           <h4>Install the recipe visualizer</h4>
           <p class="step-desc">IDE extension that renders recipe JSON as interactive workflow graphs. Works in VS Code, Cursor, and Windsurf.</p>
