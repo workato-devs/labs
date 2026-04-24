@@ -403,6 +403,45 @@
 
   .prereq-note a:hover { text-decoration: underline; }
 
+  /* ─── Install tabs ─── */
+  .install-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .install-tab {
+    font-family: var(--w-font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: rgba(255,255,255,0.45);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .install-tab:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+  }
+
+  .install-tab.active {
+    background: rgba(103, 234, 221, 0.1);
+    border-color: rgba(103, 234, 221, 0.3);
+    color: var(--w-hero-teal);
+  }
+
+  .install-panel {
+    display: none;
+  }
+
+  .install-panel.active {
+    display: block;
+  }
+
   /* ─── Workflow diagram ─── */
   .workflow-section {
     padding: 64px 0 80px;
@@ -642,14 +681,34 @@
         <div class="step-content">
           <h4>Install the CLI</h4>
           <p class="step-desc">The <code>wk</code> binary — workspace operations, recipe management, and plugin system. Single binary, no dependencies.</p>
-          <div class="code-block">
-            <span class="comment"># Download and extract the binary for your platform from Releases, then:</span><br>
-            <span class="prompt">$ </span><span class="cmd">xattr</span> <span class="flag">-d</span> com.apple.quarantine <span class="string">/path/to/wk</span><br>
-            <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/wk</span> <span class="string">/usr/local/bin/</span><br>
-            <span class="prompt">$ </span><span class="cmd">wk</span> version
+          <div class="install-tabs">
+            <button class="install-tab active" onclick="switchTab(this, 'cli')">macOS</button>
+            <button class="install-tab" onclick="switchTab(this, 'cli')">Windows</button>
+            <button class="install-tab" onclick="switchTab(this, 'cli')">Manual</button>
           </div>
-          <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
-          <p class="prereq-note"><a href="https://github.com/workato-devs/wk-cli-beta/releases">Download from Releases →</a></p>
+          <div class="install-panel active" data-group="cli">
+            <div class="code-block">
+              <span class="prompt">$ </span><span class="cmd">brew install</span> <span class="string">workato-devs/tap/wk</span><br>
+              <span class="prompt">$ </span><span class="cmd">wk</span> version
+            </div>
+          </div>
+          <div class="install-panel" data-group="cli">
+            <div class="code-block">
+              <span class="prompt">&gt; </span><span class="cmd">scoop bucket add</span> workato-devs <span class="string">https://github.com/workato-devs/scoop-bucket</span><br>
+              <span class="prompt">&gt; </span><span class="cmd">scoop install</span> wk<br>
+              <span class="prompt">&gt; </span><span class="cmd">wk</span> version
+            </div>
+          </div>
+          <div class="install-panel" data-group="cli">
+            <div class="code-block">
+              <span class="comment"># Download and extract the binary for your platform from Releases, then:</span><br>
+              <span class="prompt">$ </span><span class="cmd">xattr</span> <span class="flag">-d</span> com.apple.quarantine <span class="string">/path/to/wk</span><br>
+              <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/wk</span> <span class="string">/usr/local/bin/</span><br>
+              <span class="prompt">$ </span><span class="cmd">wk</span> version
+            </div>
+            <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
+            <p class="prereq-note"><a href="https://github.com/workato-devs/wk-cli-beta/releases">Download from Releases →</a></p>
+          </div>
         </div>
       </div>
 
@@ -657,18 +716,37 @@
         <div class="step-number">2</div>
         <div class="step-content">
           <h4>Install the recipe linter</h4>
-          <p class="step-desc">Deterministic validation — catches errors that agent self-validation misses. Download and extract the archive, move it to a permanent location, symlink the binary onto your PATH, then register it as a <code>wk</code> plugin.</p>
-          <div class="code-block">
-            <span class="comment"># Download and extract the archive for your platform from Releases.</span><br>
-            <span class="comment"># The binary inside is named recipe-lint (not wk-lint).</span><br>
-            <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/extracted-folder</span> <span class="string">/usr/local/lib/recipe-lint</span><br>
-            <span class="prompt">$ </span><span class="cmd">sudo xattr</span> <span class="flag">-rd</span> com.apple.quarantine <span class="string">/usr/local/lib/recipe-lint</span><br>
-            <span class="prompt">$ </span><span class="cmd">sudo ln</span> <span class="flag">-s</span> <span class="string">/usr/local/lib/recipe-lint/recipe-lint</span> <span class="string">/usr/local/bin/recipe-lint</span>  <span class="comment"># symlink so wk can find the plugin</span><br>
-            <span class="prompt">$ </span><span class="cmd">wk plugins install</span> recipe-lint<br>
-            <span class="prompt">$ </span><span class="cmd">which</span> recipe-lint
+          <p class="step-desc">Deterministic validation — catches errors that agent self-validation misses.</p>
+          <div class="install-tabs">
+            <button class="install-tab active" onclick="switchTab(this, 'lint')">macOS</button>
+            <button class="install-tab" onclick="switchTab(this, 'lint')">Windows</button>
+            <button class="install-tab" onclick="switchTab(this, 'lint')">Manual</button>
           </div>
-          <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
-          <p class="prereq-note"><a href="https://github.com/workato-devs/wk-lint-beta/releases">Download from Releases →</a></p>
+          <div class="install-panel active" data-group="lint">
+            <div class="code-block">
+              <span class="prompt">$ </span><span class="cmd">brew install</span> <span class="string">workato-devs/tap/recipe-lint</span><br>
+              <span class="prompt">$ </span><span class="cmd">wk plugins install</span> recipe-lint
+            </div>
+          </div>
+          <div class="install-panel" data-group="lint">
+            <div class="code-block">
+              <span class="prompt">&gt; </span><span class="cmd">scoop install</span> recipe-lint<br>
+              <span class="prompt">&gt; </span><span class="cmd">wk plugins install</span> recipe-lint
+            </div>
+          </div>
+          <div class="install-panel" data-group="lint">
+            <div class="code-block">
+              <span class="comment"># Download and extract the archive for your platform from Releases.</span><br>
+              <span class="comment"># The binary inside is named recipe-lint (not wk-lint).</span><br>
+              <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/extracted-folder</span> <span class="string">/usr/local/lib/recipe-lint</span><br>
+              <span class="prompt">$ </span><span class="cmd">sudo xattr</span> <span class="flag">-rd</span> com.apple.quarantine <span class="string">/usr/local/lib/recipe-lint</span><br>
+              <span class="prompt">$ </span><span class="cmd">sudo ln</span> <span class="flag">-s</span> <span class="string">/usr/local/lib/recipe-lint/recipe-lint</span> <span class="string">/usr/local/bin/recipe-lint</span><br>
+              <span class="prompt">$ </span><span class="cmd">wk plugins install</span> recipe-lint<br>
+              <span class="prompt">$ </span><span class="cmd">which</span> recipe-lint
+            </div>
+            <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
+            <p class="prereq-note"><a href="https://github.com/workato-devs/wk-lint-beta/releases">Download from Releases →</a></p>
+          </div>
         </div>
       </div>
 
@@ -811,6 +889,18 @@
     </p>
   </div>
 </footer>
+
+<script>
+function switchTab(btn, group) {
+  var tabs = btn.parentElement.querySelectorAll('.install-tab');
+  var panels = btn.closest('.step-content').querySelectorAll('.install-panel[data-group="' + group + '"]');
+  var idx = Array.prototype.indexOf.call(tabs, btn);
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  panels.forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  if (panels[idx]) panels[idx].classList.add('active');
+}
+</script>
 
 </body>
 </html>

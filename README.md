@@ -24,8 +24,27 @@ Four steps, each using a command you already know. No install scripts, no ambien
 
 The `wk` binary — workspace operations, recipe management, and plugin system. Single binary, no dependencies.
 
+**macOS (Homebrew):**
+
 ```bash
-# Download and extract the binary for your platform from Releases, then:
+brew install workato-devs/tap/wk
+wk version
+```
+
+**Windows (Scoop):**
+
+```powershell
+scoop bucket add workato-devs https://github.com/workato-devs/scoop-bucket
+scoop install wk
+wk version
+```
+
+<details>
+<summary>Manual install</summary>
+
+Download and extract the binary for your platform from [Releases](https://github.com/workato-devs/wk-cli-beta/releases), then:
+
+```bash
 xattr -d com.apple.quarantine /path/to/wk      # macOS: allow the binary to run
 sudo mv /path/to/wk /usr/local/bin/
 wk version
@@ -33,15 +52,32 @@ wk version
 
 > **Tip:** Right-click the extracted binary in Finder and hold Option to copy its full path.
 
-📦 [Download from Releases →](https://github.com/workato-devs/wk-cli-beta/releases)
+</details>
 
 ### 2. Install the recipe linter
 
-Deterministic validation — catches errors that agent self-validation misses. Download and extract the archive, move it to a permanent location, symlink the binary onto your PATH, then register it as a `wk` plugin.
+Deterministic validation — catches errors that agent self-validation misses.
+
+**macOS (Homebrew):**
 
 ```bash
-# Download and extract the archive for your platform from Releases.
-# The binary inside is named recipe-lint (not wk-lint).
+brew install workato-devs/tap/recipe-lint
+wk plugins install recipe-lint
+```
+
+**Windows (Scoop):**
+
+```powershell
+scoop install recipe-lint
+wk plugins install recipe-lint
+```
+
+<details>
+<summary>Manual install</summary>
+
+Download and extract the archive for your platform from [Releases](https://github.com/workato-devs/wk-lint-beta/releases). The binary inside is named `recipe-lint` (not `wk-lint`).
+
+```bash
 sudo mv /path/to/extracted-folder /usr/local/lib/recipe-lint  # move to a permanent location
 sudo xattr -rd com.apple.quarantine /usr/local/lib/recipe-lint  # macOS: allow the binary to run
 sudo ln -s /usr/local/lib/recipe-lint/recipe-lint /usr/local/bin/recipe-lint  # symlink so wk can find the plugin
@@ -51,7 +87,7 @@ which recipe-lint
 
 > **Tip:** Right-click the extracted binary in Finder and hold Option to copy its full path.
 
-📦 [Download from Releases →](https://github.com/workato-devs/wk-lint-beta/releases)
+</details>
 
 ### 3. Clone the recipe skills
 
