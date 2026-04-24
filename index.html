@@ -627,7 +627,7 @@
 <div class="teal-rule"></div>
 
 <!-- ────────── Install ────────── -->
-<div class="container">
+<div class="container--wide">
   <section class="install-section" id="install">
     <span class="section-label">Get started</span>
     <h2 class="section-title">Install the toolkit</h2>
@@ -661,8 +661,8 @@
           <div class="code-block">
             <span class="comment"># Download and extract the archive for your platform from Releases.</span><br>
             <span class="comment"># The binary inside is named recipe-lint (not wk-lint).</span><br>
-            <span class="prompt">$ </span><span class="cmd">xattr</span> <span class="flag">-d</span> com.apple.quarantine <span class="string">/path/to/recipe-lint</span><br>
             <span class="prompt">$ </span><span class="cmd">sudo mv</span> <span class="string">/path/to/extracted-folder</span> <span class="string">/usr/local/lib/recipe-lint</span><br>
+            <span class="prompt">$ </span><span class="cmd">sudo xattr</span> <span class="flag">-rd</span> com.apple.quarantine <span class="string">/usr/local/lib/recipe-lint</span><br>
             <span class="prompt">$ </span><span class="cmd">sudo ln</span> <span class="flag">-s</span> <span class="string">/usr/local/lib/recipe-lint/recipe-lint</span> <span class="string">/usr/local/bin/recipe-lint</span>  <span class="comment"># symlink so wk can find the plugin</span><br>
             <span class="prompt">$ </span><span class="cmd">wk plugins install</span> recipe-lint<br>
             <span class="prompt">$ </span><span class="cmd">which</span> recipe-lint

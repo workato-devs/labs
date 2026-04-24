@@ -42,8 +42,8 @@ Deterministic validation — catches errors that agent self-validation misses. D
 ```bash
 # Download and extract the archive for your platform from Releases.
 # The binary inside is named recipe-lint (not wk-lint).
-xattr -d com.apple.quarantine /path/to/recipe-lint           # macOS: allow the binary to run
 sudo mv /path/to/extracted-folder /usr/local/lib/recipe-lint  # move to a permanent location
+sudo xattr -rd com.apple.quarantine /usr/local/lib/recipe-lint  # macOS: allow the binary to run
 sudo ln -s /usr/local/lib/recipe-lint/recipe-lint /usr/local/bin/recipe-lint  # symlink so wk can find the plugin
 wk plugins install recipe-lint
 which recipe-lint
