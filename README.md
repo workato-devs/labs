@@ -1,6 +1,6 @@
 # Workato Labs
 
-**Build recipes with AI agents that actually work.**
+**Build recipes with the AI coding tools you already use.**
 
 An open-source developer toolkit for building, validating, visualizing, and managing Workato recipes — designed for humans and coding agents alike.
 
@@ -22,7 +22,7 @@ Four steps, each using a command you already know. No install scripts, no ambien
 
 ### 1. Install the CLI
 
-The `wk` binary — workspace operations, recipe management, and plugin system. Single binary, no dependencies.
+A unified CLI for Workato platform operations and recipe development. Single binary, no dependencies.
 
 **macOS (Homebrew):**
 
@@ -118,7 +118,7 @@ cursor --install-extension ./recipe-visualizer-0.5.2.vsix
 Each tool covers a piece of the developer lifecycle. Together, they replace manual recipe wrangling with an agent-native development flow.
 
 **wk CLI** · Go
-Single binary, zero dependencies. `wk pull`, `wk push`, `wk diff`, and `wk status` across workspaces. Plugin system for extending with custom commands.
+A unified CLI for Workato platform operations and recipe development. `wk pull`, `wk push`, `wk diff`, and `wk status` across workspaces. Plugin system for extending with custom commands.
 
 **Recipe Linter** · Go
 Deterministic validation via `wk lint`. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.
