@@ -105,10 +105,10 @@ Download the `.vsix` from this repo's [`downloads/`](https://github.com/workato-
 
 ```bash
 # VS Code
-code --install-extension ./recipe-visualizer-0.5.2.vsix
+code --install-extension ./recipe-visualizer-0.5.3.vsix
 
 # Cursor
-cursor --install-extension ./recipe-visualizer-0.5.2.vsix
+cursor --install-extension ./recipe-visualizer-0.5.3.vsix
 ```
 
 ---
