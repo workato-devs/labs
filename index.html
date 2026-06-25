@@ -4,36 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Workato Labs — Developer Toolkit</title>
-<link href="https://fonts.googleapis.com/css2?family=Besley:wght@400;600;700&family=Nunito+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="An open-source developer toolkit for building, validating, visualizing, and managing Workato recipes — designed for humans and coding agents alike. Works with any AI agent, any IDE, any OS.">
+<link rel="canonical" href="https://workato-devs.github.io/labs/">
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+
+<!-- Open Graph / social share -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Workato Labs">
+<meta property="og:title" content="Workato Labs — Developer Toolkit">
+<meta property="og:description" content="An open-source toolkit for building, validating, and visualizing Workato recipes — built for AI coding agents and the developers who work with them.">
+<meta property="og:url" content="https://workato-devs.github.io/labs/">
+<meta property="og:image" content="https://workato-devs.github.io/labs/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Workato Labs — Developer Toolkit">
+<meta name="twitter:description" content="An open-source toolkit for building, validating, and visualizing Workato recipes — built for AI coding agents and the developers who work with them.">
+<meta name="twitter:image" content="https://workato-devs.github.io/labs/assets/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&family=Inconsolata:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --w-hero-teal: #67EADD;
     --w-dark-teal: #21DBC8;
     --w-light-teal: #B3FEF7;
     --w-dark-blue: #083763;
+    --w-darkest-blue: #042A4E;
     --w-deep-blue: #062D52;
     --w-royal-blue: #1D60CA;
-    --w-medium-blue: #69D2FF;
+    --w-medium-blue: #69D2FF;  /* bright blue accent — lightened from Royal #1D60CA for legibility on navy & code */
     --w-baby-blue: #D3EEFA;
+    --w-white: #FFFFFF;
     --w-sand: #F4F2E3;
     --w-gray: #F2F2F2;
-    --w-dewy-purple: #C4A5DE;
-    --w-pink: #FF69B4;
-    --w-lime: #BFFF00;
+    --w-dewy-purple: #C3A9FF;
+    --w-icecream: #FC9867;
+    --w-lavender: #EF80E3;
+    --w-lime: #ABDC03;
+    --w-ink: #083763;
+    --w-ink-muted: #5a6b7e;
+    /* Signature cool sweep — teal → blue → lavender → pink (the dot-gradient palette) */
+    --w-gradient: linear-gradient(90deg, var(--w-hero-teal), var(--w-royal-blue) 45%, var(--w-dewy-purple) 72%, var(--w-lavender));
     --w-font-display: 'Besley', Georgia, serif;
+    --w-font-heading: 'Inter', -apple-system, 'Segoe UI', sans-serif;
     --w-font-body: 'Nunito Sans', system-ui, sans-serif;
-    --w-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --w-font-mono: 'Inconsolata', ui-monospace, Menlo, monospace;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--w-dark-blue);
+    background: var(--w-darkest-blue);
     color: #fff;
     font-family: var(--w-font-body);
     font-size: 17px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   /* ─── Layout ─── */
@@ -49,12 +78,18 @@
     padding: 0 32px;
   }
 
-  /* ─── Decorative flair line ─── */
+  /* ─── Surface bands — the brand's light/dark rhythm ─── */
+  .band { position: relative; }
+  .band--deep  { background: var(--w-darkest-blue); color: #fff; }
+  .band--navy  { background: var(--w-dark-blue);    color: #fff; }
+  .band--light { background: var(--w-sand);         color: var(--w-ink); }
+
+  /* ─── Signature gradient seam between bands ─── */
   .teal-rule {
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent 0%, var(--w-hero-teal) 20%, var(--w-hero-teal) 80%, transparent 100%);
-    opacity: 0.4;
+    background: var(--w-gradient);
+    opacity: 0.85;
   }
 
   /* ─── Nav ─── */
@@ -115,10 +150,11 @@
   }
 
   nav .nav-links a {
+    font-family: var(--w-font-heading);
     color: rgba(255,255,255,0.7);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.01em;
     transition: color 0.2s;
   }
@@ -129,7 +165,20 @@
   .hero {
     padding: 80px 0 72px;
     text-align: center;
+    position: relative;
+    z-index: 1;
   }
+
+  /* hand-drawn teal four-point sparkles flanking the headline */
+  .spark {
+    position: absolute;
+    color: var(--w-hero-teal);
+    pointer-events: none;
+    opacity: 0.9;
+  }
+  .spark--1 { top: 4px;  left: 8%;  width: 26px; transform: rotate(-8deg); }
+  .spark--2 { top: 64px; right: 11%; width: 18px; transform: rotate(10deg); }
+  @media (max-width: 680px) { .spark { display: none; } }
 
   .hero h1 {
     font-family: var(--w-font-display);
@@ -141,7 +190,7 @@
   }
 
   .hero h1 .teal { color: var(--w-hero-teal); }
-  .hero h1 .pink { color: var(--w-pink); }
+  .hero h1 .warm { color: var(--w-icecream); }
 
   .hero .subtitle {
     font-size: 19px;
@@ -158,15 +207,64 @@
     flex-wrap: wrap;
   }
 
+  /* ─── Compatibility strip ─── */
+  .compat-strip {
+    margin-top: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .compat-strip .compat-label {
+    font-family: var(--w-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .compat-strip .compat-items {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .compat-strip .compat-items li {
+    font-family: var(--w-font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.72);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  /* teal dot separators between tools */
+  .compat-strip .compat-items li:not(:last-child)::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--w-hero-teal);
+    opacity: 0.45;
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 14px 28px;
     border-radius: 8px;
-    font-family: var(--w-font-body);
+    font-family: var(--w-font-heading);
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     transition: all 0.2s;
     cursor: pointer;
@@ -194,6 +292,23 @@
     background: rgba(103, 234, 221, 0.06);
   }
 
+  /* star ask — count chip nested in the ghost button */
+  .star-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 2px;
+    padding-left: 11px;
+    border-left: 1px solid rgba(103, 234, 221, 0.28);
+    font-family: var(--w-font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    animation: star-in 0.4s ease both;
+  }
+  .star-pill svg { width: 13px; height: 13px; opacity: 0.85; }
+  @keyframes star-in { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }
+
   /* ─── Version badge ─── */
   .version-banner {
     text-align: center;
@@ -204,6 +319,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    max-width: 100%;
     font-family: var(--w-font-mono);
     font-size: 13px;
     color: rgba(255,255,255,0.5);
@@ -241,10 +357,11 @@
   }
 
   .section-title {
-    font-family: var(--w-font-display);
+    font-family: var(--w-font-heading);
     font-size: clamp(28px, 3.5vw, 38px);
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.2;
+    letter-spacing: -0.01em;
     margin-bottom: 16px;
   }
 
@@ -296,15 +413,15 @@
   }
 
   .tool-icon--teal { background: rgba(103, 234, 221, 0.12); color: var(--w-hero-teal); }
-  .tool-icon--purple { background: rgba(196, 165, 222, 0.12); color: var(--w-dewy-purple); }
+  .tool-icon--purple { background: rgba(195, 169, 255, 0.14); color: var(--w-dewy-purple); }
   .tool-icon--blue { background: rgba(105, 210, 255, 0.12); color: var(--w-medium-blue); }
-  .tool-icon--lime { background: rgba(191, 255, 0, 0.1); color: var(--w-lime); }
-  .tool-icon--pink { background: rgba(255, 105, 180, 0.1); color: var(--w-pink); }
+  .tool-icon--lime { background: rgba(171, 220, 3, 0.14); color: var(--w-lime); }
+  .tool-icon--coral { background: rgba(252, 152, 103, 0.12); color: var(--w-icecream); }
 
   .tool-card h3 {
-    font-family: var(--w-font-body);
+    font-family: var(--w-font-heading);
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .tool-card .tool-tag {
@@ -365,8 +482,9 @@
   .step-content { flex: 1; min-width: 0; }
 
   .step-content h4 {
+    font-family: var(--w-font-heading);
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 6px;
   }
 
@@ -388,6 +506,41 @@
     overflow-x: auto;
     position: relative;
     line-height: 1.7;
+  }
+
+  /* ─── Copy-to-clipboard ─── */
+  .code-wrap { position: relative; }
+
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    font-family: var(--w-font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    background: rgba(6,45,82,0.9);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.18s, color 0.18s, border-color 0.18s;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .code-wrap:hover .copy-btn,
+  .copy-btn:focus-visible { opacity: 1; }
+  .copy-btn:hover { color: var(--w-hero-teal); border-color: rgba(103,234,221,0.4); }
+  .copy-btn.copied { color: var(--w-lime); border-color: rgba(171,220,3,0.45); opacity: 1; }
+  .copy-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  @media (hover: none) {
+    .copy-btn { opacity: 1; }
   }
 
   .code-block .comment {
@@ -519,8 +672,11 @@
 
   /* ─── Repos section ─── */
   .repos-section {
-    padding: 80px 0;
+    padding: 80px 0 0;
   }
+
+  /* tail band: repos + principles share one light band; pad its base so sand frames the teaser */
+  .band--tail { padding-bottom: 88px; }
 
   .repo-list {
     display: grid;
@@ -565,24 +721,180 @@
     margin-top: 2px;
   }
 
+  /* ─── Principles teaser ─── */
+  .principles-teaser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 36px 0 0;
+    padding: 32px 40px;
+    background: linear-gradient(120deg, #0a3f74, var(--w-dark-blue) 58%, #0a2f57);
+    border: 1px solid rgba(103,234,221,0.22);
+    border-radius: 14px;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(8, 55, 99, 0.14);
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .principles-teaser:hover {
+    border-color: rgba(103,234,221,0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 38px rgba(8, 55, 99, 0.20);
+  }
+  .principles-teaser .pt-copy { flex: 1; min-width: 240px; }
+  .principles-teaser .section-label { margin-bottom: 8px; }
+  .principles-teaser .pt-line {
+    font-family: var(--w-font-display);
+    font-size: clamp(19px, 2.2vw, 24px);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .principles-teaser .pt-cta {
+    font-family: var(--w-font-heading);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--w-hero-teal);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .principles-teaser .pt-arrow { transition: transform 0.25s; }
+  .principles-teaser:hover .pt-arrow { transform: translateX(4px); }
+
   /* ─── Footer ─── */
   footer {
-    padding: 48px 0;
-    text-align: center;
+    padding: 64px 0 40px;
   }
 
-  footer .footer-text {
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand { max-width: 340px; }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--w-font-heading);
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .footer-logo svg { color: var(--w-hero-teal); flex-shrink: 0; }
+
+  .footer-tagline {
     font-size: 14px;
-    color: rgba(255,255,255,0.3);
-    line-height: 1.7;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
   }
 
-  footer .footer-text a {
-    color: var(--w-hero-teal);
+  .footer-cols {
+    display: flex;
+    gap: 56px;
+    flex-wrap: wrap;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .footer-col-label {
+    font-family: var(--w-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 3px;
+  }
+
+  .footer-col a {
+    font-family: var(--w-font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
     text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--w-hero-teal); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 52px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+  }
+  .footer-bottom .footer-note {
+    font-family: var(--w-font-mono);
+    font-size: 12px;
   }
 
-  footer .footer-text a:hover { text-decoration: underline; }
+  /* ─── Light-band overrides: navy ink, real brand cards ─── */
+  .band--light .section-desc { color: var(--w-ink-muted); }
+
+  /* eyebrow labels carry a per-section hue (spectrum as punctuation) */
+  .band--light .section-label { color: var(--w-royal-blue); }
+  /* the principles teaser is a dark navy card inside the light band — keep its eyebrow teal, not royal-on-navy */
+  .band--light .principles-teaser .section-label { color: var(--w-hero-teal); }
+  .section-label--coral { color: var(--w-icecream) !important; }
+
+  /* workflow diagram on light */
+  .band--light .workflow-visual {
+    background: var(--w-white);
+    border-color: rgba(8, 55, 99, 0.10);
+  }
+  .band--light .wf-label { color: var(--w-dark-blue); }
+  .band--light .wf-tool  { color: var(--w-ink-muted); }
+  .band--light .wf-arrow { color: rgba(8, 55, 99, 0.25); }
+
+  /* tool cards → baby-blue brand cards */
+  .band--light .tool-card {
+    background: var(--w-baby-blue);
+    border-color: rgba(8, 55, 99, 0.08);
+  }
+  .band--light .tool-card:hover {
+    border-color: rgba(29, 96, 202, 0.35);
+    background: #c8e7f6;
+  }
+  .band--light .tool-card p { color: var(--w-ink-muted); }
+  .band--light .tool-card .tool-tag { color: rgba(8, 55, 99, 0.7); }
+
+  /* darken icon glyphs so they hold contrast on baby-blue */
+  .band--light .tool-icon--teal   { background: rgba(33, 219, 200, 0.22); color: #0b8378; }
+  .band--light .tool-icon--lime   { background: rgba(171, 220, 3, 0.22);  color: #6f8f00; }
+  .band--light .tool-icon--blue   { background: rgba(29, 96, 202, 0.14);  color: var(--w-royal-blue); }
+  .band--light .tool-icon--purple { background: rgba(105, 50, 255, 0.12); color: #6932ff; }
+
+  /* repos → white cards on sand */
+  .band--light .repo-link {
+    background: var(--w-white);
+    border-color: rgba(8, 55, 99, 0.08);
+    color: var(--w-dark-blue);
+  }
+  .band--light .repo-link:hover {
+    border-color: rgba(29, 96, 202, 0.35);
+    background: var(--w-white);
+    box-shadow: 0 4px 16px rgba(8, 55, 99, 0.07);
+  }
+  .band--light .repo-link .repo-name { color: var(--w-royal-blue); }
+  .band--light .repo-link .repo-desc { color: var(--w-ink-muted); }
+  .band--light .repo-link .repo-icon { color: rgba(8, 55, 99, 0.30); }
 
   /* ─── Responsive ─── */
   @media (max-width: 680px) {
@@ -594,12 +906,15 @@
     .workflow-visual { flex-direction: column; gap: 4px; }
     .wf-arrow { transform: rotate(90deg); }
     .install-step { flex-direction: column; gap: 12px; }
+    .principles-teaser { flex-direction: column; align-items: flex-start; gap: 18px; padding: 28px 24px; }
+    .compat-strip { gap: 12px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ────────── Nav ────────── -->
+<!-- ────────── Cover band: nav + hero ────────── -->
+<div class="band band--deep band--hero">
 <div class="container--wide">
   <nav>
     <a href="#" class="logo">
@@ -618,43 +933,61 @@
       <li><a href="#install">Install</a></li>
       <li><a href="#toolkit">Toolkit</a></li>
       <li><a href="#repos">Repos</a></li>
+      <li><a href="./principles.html">Principles</a></li>
       <li><a href="https://github.com/workato-devs/labs/discussions">Discuss</a></li>
     </ul>
   </nav>
 </div>
 
-<div class="teal-rule"></div>
-
 <!-- ────────── Hero ────────── -->
 <div class="container">
   <section class="hero">
+    <svg class="spark spark--1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c1 7 4 11 12 12-8 1-11 5-12 12-1-7-4-11-12-12 8-1 11-5 12-12Z"/></svg>
+    <svg class="spark spark--2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c1 7 4 11 12 12-8 1-11 5-12 12-1-7-4-11-12-12 8-1 11-5 12-12Z"/></svg>
     <h1>
-      <span class="pink">Build</span> recipes with the<br>
+      <span class="warm">Build</span> recipes with the<br>
       AI coding tools <span class="teal">you already use</span>
     </h1>
     <p class="subtitle">
-      An open-source developer toolkit for building, validating, visualizing, and managing Workato recipes — designed for humans and coding agents alike.
+      Build, validate, and visualize Workato recipes in your own editor — with deterministic checks your agent can't fake.
     </p>
     <div class="cta-row">
       <a href="#install" class="btn btn--primary">Get started</a>
-      <a href="https://github.com/workato-devs/labs" class="btn btn--ghost">
+      <a href="https://github.com/workato-devs/labs" class="btn btn--ghost star-btn" id="starBtn" aria-label="Star Workato Labs on GitHub">
         <img src="./assets/icon-github.svg" width="16" height="16" alt="">
-        GitHub
+        <span>Star on GitHub</span>
+        <span class="star-pill" id="starPill" hidden>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-5.6 3.3 1.5-6.4-5-4.3 6.5-.5L12 3.4l2.6 6 6.5.5-5 4.3 1.5 6.4z"/></svg>
+          <span id="starCount">—</span>
+        </span>
       </a>
+    </div>
+
+    <div class="compat-strip">
+      <span class="compat-label">Works with</span>
+      <ul class="compat-items">
+        <li>VS Code</li>
+        <li>Cursor</li>
+        <li>Windsurf</li>
+        <li>Claude Code</li>
+        <li>Codex</li>
+      </ul>
     </div>
   </section>
 
   <div class="version-banner">
     <span class="version-badge">
       <span class="dot"></span>
-      Beta — Design Partner Program
+      Open source &middot; any agent, any IDE, any OS
     </span>
   </div>
 </div>
+</div><!-- /band--deep -->
 
 <div class="teal-rule"></div>
 
-<!-- ────────── Workflow ────────── -->
+<!-- ────────── Light band: workflow + toolkit ────────── -->
+<div class="band band--light">
 <div class="container--wide">
   <section class="workflow-section" id="workflow">
     <div class="container">
@@ -690,9 +1023,62 @@
   </section>
 </div>
 
+<!-- ────────── Toolkit detail ────────── -->
+<div class="container">
+  <section class="toolkit-section" id="toolkit">
+    <span class="section-label section-label--coral">What's in the box</span>
+    <h2 class="section-title">Four tools, one workflow</h2>
+    <p class="section-desc">
+      Each tool covers a piece of the developer lifecycle. Together, they replace manual recipe wrangling with an agent-native development flow.
+    </p>
+
+    <div class="tool-grid">
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--teal">⌘</div>
+          <h3>wk CLI</h3>
+          <span class="tool-tag">Go</span>
+        </div>
+        <p>A unified CLI for Workato platform operations and recipe development. <code>wk pull</code>, <code>wk push</code>, <code>wk diff</code>, and <code>wk status</code> across workspaces. Plugin system for extending with custom commands.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--lime">✓</div>
+          <h3>Recipe Linter</h3>
+          <span class="tool-tag">Go</span>
+        </div>
+        <p>Deterministic validation compiled into <code>wk lint</code>. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--blue">✎</div>
+          <h3>Recipe Skills</h3>
+          <span class="tool-tag">Markdown</span>
+        </div>
+        <p>Agent-consumable knowledge for recipe authoring. Connector config, datapill syntax, control flow, error handling. Also home to connector-specific lint rules. Point your coding agent at the skills directory.</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon tool-icon--purple"><img src="./assets/icon-visualizer.svg" width="18" height="18" alt=""></div>
+          <h3>Recipe Visualizer</h3>
+          <span class="tool-tag">VS Code extension</span>
+        </div>
+        <p>IDE extension rendering recipe JSON as interactive workflow graphs. Click a node, navigate to the source. Export graphs as images. VS Code, Cursor, Windsurf.</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+</div><!-- /band--light -->
+
 <div class="teal-rule"></div>
 
-<!-- ────────── Install ────────── -->
+<!-- ────────── Install band ────────── -->
+<div class="band band--navy">
 <div class="container--wide">
   <section class="install-section" id="install">
     <span class="section-label">Get started</span>
@@ -734,7 +1120,7 @@
               <span class="prompt">$ </span><span class="cmd">wk</span> version
             </div>
             <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
-            <p class="prereq-note"><a href="https://github.com/workato-devs/wk-cli-beta/releases">Download from Releases →</a></p>
+            <p class="prereq-note"><a href="https://github.com/workato-devs/wk/releases">Download from Releases →</a></p>
           </div>
         </div>
       </div>
@@ -772,7 +1158,7 @@
               <span class="prompt">$ </span><span class="cmd">which</span> recipe-lint
             </div>
             <p class="prereq-note">Tip: Right-click the extracted binary in Finder and hold Option to copy its full path.</p>
-            <p class="prereq-note"><a href="https://github.com/workato-devs/wk-lint-beta/releases">Download from Releases →</a></p>
+            <p class="prereq-note"><a href="https://github.com/workato-devs/recipe-lint/releases">Download from Releases →</a></p>
           </div>
         </div>
       </div>
@@ -793,77 +1179,42 @@
         <div class="step-content">
           <h4>Install the recipe visualizer</h4>
           <p class="step-desc">IDE extension that renders recipe JSON as interactive workflow graphs. Works in VS Code, Cursor, and Windsurf.</p>
-          <div class="code-block">
-            <span class="comment"># Download the .vsix from this repo's downloads folder, then:</span><br>
-            <span class="prompt">$ </span><span class="cmd">code</span> <span class="flag">--install-extension</span> <span class="string">./recipe-visualizer-0.5.3.vsix</span><br>
-            <br>
-            <span class="comment"># Or for Cursor:</span><br>
-            <span class="prompt">$ </span><span class="cmd">cursor</span> <span class="flag">--install-extension</span> <span class="string">./recipe-visualizer-0.5.3.vsix</span>
+          <div class="install-tabs">
+            <button class="install-tab active" onclick="switchTab(this, 'viz')">Marketplace</button>
+            <button class="install-tab" onclick="switchTab(this, 'viz')">Manual</button>
           </div>
-          <p class="prereq-note"><a href="https://github.com/workato-devs/labs/tree/main/downloads">Download .vsix →</a></p>
+          <div class="install-panel active" data-group="viz">
+            <div class="code-block">
+              <span class="comment"># Search "Recipe Visualizer" in your editor's Extensions panel, or:</span><br>
+              <span class="prompt">$ </span><span class="cmd">code</span> <span class="flag">--install-extension</span> <span class="string">WorkatoLabs.recipe-visualizer</span><br>
+              <br>
+              <span class="comment"># Cursor and Windsurf use the same command:</span><br>
+              <span class="prompt">$ </span><span class="cmd">cursor</span> <span class="flag">--install-extension</span> <span class="string">WorkatoLabs.recipe-visualizer</span>
+            </div>
+            <p class="prereq-note"><a href="https://marketplace.visualstudio.com/items?itemName=WorkatoLabs.recipe-visualizer">VS Code Marketplace →</a> · <a href="https://open-vsx.org/extension/WorkatoLabs/recipe-visualizer">Open VSX →</a></p>
+          </div>
+          <div class="install-panel" data-group="viz">
+            <div class="code-block">
+              <span class="comment"># Download the .vsix from the recipe-visualizer releases, then:</span><br>
+              <span class="prompt">$ </span><span class="cmd">code</span> <span class="flag">--install-extension</span> <span class="string">./recipe-visualizer-1.0.0.vsix</span><br>
+              <br>
+              <span class="comment"># Or for Cursor / Windsurf:</span><br>
+              <span class="prompt">$ </span><span class="cmd">cursor</span> <span class="flag">--install-extension</span> <span class="string">./recipe-visualizer-1.0.0.vsix</span>
+            </div>
+            <p class="prereq-note"><a href="https://github.com/workato-devs/recipe-visualizer/releases">Download from Releases →</a></p>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
 </div>
+</div><!-- /band--navy -->
 
 <div class="teal-rule"></div>
 
-<!-- ────────── Toolkit detail ────────── -->
-<div class="container">
-  <section class="toolkit-section" id="toolkit">
-    <span class="section-label">What's in the box</span>
-    <h2 class="section-title">Four tools, one workflow</h2>
-    <p class="section-desc">
-      Each tool covers a piece of the developer lifecycle. Together, they replace manual recipe wrangling with an agent-native development flow.
-    </p>
-
-    <div class="tool-grid">
-
-      <div class="tool-card">
-        <div class="tool-header">
-          <div class="tool-icon tool-icon--teal">⌘</div>
-          <h3>wk CLI</h3>
-          <span class="tool-tag">Go</span>
-        </div>
-        <p>A unified CLI for Workato platform operations and recipe development. <code>wk pull</code>, <code>wk push</code>, <code>wk diff</code>, and <code>wk status</code> across workspaces. Plugin system for extending with custom commands.</p>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-header">
-          <div class="tool-icon tool-icon--lime">✓</div>
-          <h3>Recipe Linter</h3>
-          <span class="tool-tag">Go</span>
-        </div>
-        <p>Deterministic validation compiled into <code>wk lint</code>. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.</p>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-header">
-          <div class="tool-icon tool-icon--blue">✎</div>
-          <h3>Recipe Skills</h3>
-          <span class="tool-tag">7 connectors</span>
-        </div>
-        <p>Agent-consumable knowledge for recipe authoring. Connector config, datapill syntax, control flow, error handling. Also home to connector-specific lint rules. Point your coding agent at the skills directory.</p>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-header">
-          <div class="tool-icon tool-icon--purple"><img src="./assets/icon-visualizer.svg" width="18" height="18" alt=""></div>
-          <h3>Recipe Visualizer</h3>
-          <span class="tool-tag">.vsix</span>
-        </div>
-        <p>IDE extension rendering recipe JSON as interactive workflow graphs. Click a node, navigate to the source. Export graphs as images. VS Code, Cursor, Windsurf.</p>
-      </div>
-
-    </div>
-  </section>
-</div>
-
-<div class="teal-rule"></div>
-
-<!-- ────────── Repos ────────── -->
+<!-- ────────── Light band: repos + principles ────────── -->
+<div class="band band--light band--tail">
 <div class="container">
   <section class="repos-section" id="repos">
     <span class="section-label">Source</span>
@@ -874,11 +1225,11 @@
         <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
         <div>
           <div class="repo-name">workato-labs</div>
-          <div class="repo-desc">Hub — docs, downloads, .vsix extensions</div>
+          <div class="repo-desc">Hub — landing site, docs, install guide</div>
         </div>
       </a>
 
-      <a href="https://github.com/workato-devs/wk-cli-beta" class="repo-link">
+      <a href="https://github.com/workato-devs/wk" class="repo-link">
         <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
         <div>
           <div class="repo-name">wk</div>
@@ -890,30 +1241,78 @@
         <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
         <div>
           <div class="repo-name">recipe-skills</div>
-          <div class="repo-desc">Agent knowledge — 7 connector skill sets</div>
+          <div class="repo-desc">Agent knowledge — connector skill sets</div>
         </div>
       </a>
 
-      <a href="https://github.com/workato-devs/wk-lint-beta" class="repo-link">
+      <a href="https://github.com/workato-devs/recipe-lint" class="repo-link">
         <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
         <div>
-          <div class="repo-name">wk-lint</div>
+          <div class="repo-name">recipe-lint</div>
           <div class="repo-desc">Recipe linter — deterministic validation</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/workato-devs/recipe-visualizer" class="repo-link">
+        <img class="repo-icon" src="./assets/icon-repo.svg" width="20" height="20" alt="">
+        <div>
+          <div class="repo-name">recipe-visualizer</div>
+          <div class="repo-desc">IDE extension — interactive recipe graphs</div>
         </div>
       </a>
     </div>
   </section>
+
+  <!-- ────────── Principles teaser ────────── -->
+  <a class="principles-teaser" href="./principles.html">
+    <div class="pt-copy">
+      <span class="section-label">Why we build this way</span>
+      <p class="pt-line">Open by default. Built for agents. Shipped fast, in the open.</p>
+    </div>
+    <span class="pt-cta">Read our guiding principles <span class="pt-arrow">→</span></span>
+  </a>
 </div>
+</div><!-- /band--tail -->
 
 <div class="teal-rule"></div>
 
 <!-- ────────── Footer ────────── -->
-<footer>
-  <div class="container">
-    <p class="footer-text">
-      Workato Labs is an open-source initiative from Workato.<br>
-      Community feedback welcome, no SLA. <a href="https://github.com/workato-devs/labs/discussions">Join the conversation →</a>
-    </p>
+<footer class="band band--deep">
+  <div class="container--wide">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5.5 1.5h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M6.5 1.5v4.3l-3.3 5.5a1.8 1.8 0 001.5 2.7h6.6a1.8 1.8 0 001.5-2.7l-3.3-5.5V1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Workato Labs
+        </div>
+        <p class="footer-tagline">
+          An open-source toolkit for building recipes with the AI coding tools you already use.
+        </p>
+      </div>
+
+      <nav class="footer-cols" aria-label="Footer">
+        <div class="footer-col">
+          <span class="footer-col-label">Toolkit</span>
+          <a href="#install">Install</a>
+          <a href="#toolkit">Tools</a>
+          <a href="#repos">Repositories</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-label">Project</span>
+          <a href="./principles.html">Principles</a>
+          <a href="https://github.com/workato-devs/labs/discussions">Discussions</a>
+          <a href="https://github.com/workato-devs">GitHub</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Workato, Inc.</span>
+      <span class="footer-note">Experimental — community feedback welcome, no SLA.</span>
+    </div>
   </div>
 </footer>
 
@@ -927,6 +1326,101 @@ function switchTab(btn, group) {
   btn.classList.add('active');
   if (panels[idx]) panels[idx].classList.add('active');
 }
+
+// Live GitHub star count on the secondary CTA (graceful — hidden if it fails)
+(function () {
+  var REPO = 'workato-devs/labs';
+  var pill = document.getElementById('starPill');
+  var out = document.getElementById('starCount');
+  if (!pill || !out) return;
+
+  function show(n) {
+    if (!(n > 0)) return; // hide the chip at 0 stars — avoids "unpopular" optics at launch
+    out.textContent = n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n);
+    pill.hidden = false;
+  }
+
+  try {
+    var cached = sessionStorage.getItem('labs-stars');
+    if (cached !== null) { show(parseInt(cached, 10)); return; }
+  } catch (e) {}
+
+  fetch('https://api.github.com/repos/' + REPO, { headers: { Accept: 'application/vnd.github+json' } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (d) {
+      if (typeof d.stargazers_count !== 'number') return;
+      try { sessionStorage.setItem('labs-stars', d.stargazers_count); } catch (e) {}
+      show(d.stargazers_count);
+    })
+    .catch(function () { /* leave pill hidden; button still reads "Star on GitHub" */ });
+})();
+
+// Copy-to-clipboard on every code block
+(function () {
+  var COPY_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+
+  function extract(block) {
+    var lines = [''];
+    block.childNodes.forEach(function (node) {
+      if (node.nodeName === 'BR') { lines.push(''); return; }
+      if (node.nodeType === 1 && node.classList && node.classList.contains('prompt')) return; // drop "$ " / "> " prompt markers
+      lines[lines.length - 1] += node.textContent;
+    });
+    // Copy what's on screen minus the prompt: keep "# ..." comments (paste-safe, carry
+    // prerequisite/alternative context) and preserve the blank line between command groups,
+    // but normalize indentation and drop leading/trailing/double blanks.
+    lines = lines.map(function (l) { return l.trim(); });
+    var out = [];
+    lines.forEach(function (l) {
+      if (l === '' && (out.length === 0 || out[out.length - 1] === '')) return;
+      out.push(l);
+    });
+    while (out.length && out[out.length - 1] === '') out.pop();
+    return out.join('\n');
+  }
+
+  document.querySelectorAll('.code-block').forEach(function (block) {
+    var wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    block.parentNode.insertBefore(wrap, block);
+    wrap.appendChild(block);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.setAttribute('aria-label', 'Copy to clipboard');
+    btn.innerHTML = COPY_SVG + '<span>Copy</span>';
+    wrap.appendChild(btn);
+
+    btn.addEventListener('click', function () {
+      var text = extract(block);
+      var done = function () {
+        btn.classList.add('copied');
+        btn.querySelector('span').textContent = 'Copied';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.querySelector('span').textContent = 'Copy';
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallback(text, done); });
+      } else {
+        fallback(text, done);
+      }
+    });
+  });
+
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+})();
 </script>
 
 </body>

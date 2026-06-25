@@ -1,0 +1,92 @@
+<svg viewBox="0 0 900 268" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#5a6b7e"/>
+    </marker>
+    <marker id="ah-g" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#0b8378"/>
+    </marker>
+    <marker id="ah-r" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#FC9867"/>
+    </marker>
+    <marker id="ah-b" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#1D60CA"/>
+    </marker>
+    <marker id="ah-p" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#6932ff"/>
+    </marker>
+  </defs>
+
+  <!-- ── Edges (drawn first) ── -->
+
+  <!-- Recipe Skills → AI Agent (solid blue — grounding context) -->
+  <line x1="82" y1="59" x2="82" y2="103" stroke="#1D60CA" stroke-width="1.5" marker-end="url(#ah-b)"/>
+  <text x="91" y="84" font-size="10" fill="#1D60CA" font-style="italic">context</text>
+
+  <!-- Recipe Skills → wk lint (dashed blue — lint rules) -->
+  <path d="M155,37 L554,37 L554,109" stroke="#1D60CA" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-b)"/>
+  <text x="355" y="29" text-anchor="middle" font-size="10" fill="#1D60CA" font-style="italic">lint rules</text>
+
+  <!-- AI Agent → Write Recipe -->
+  <line x1="155" y1="130" x2="193" y2="130" stroke="#5a6b7e" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- Write Recipe → Developer -->
+  <line x1="305" y1="130" x2="338" y2="130" stroke="#5a6b7e" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- Developer → wk lint -->
+  <line x1="475" y1="130" x2="508" y2="130" stroke="#5a6b7e" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- wk lint → Pass? -->
+  <line x1="598" y1="130" x2="620" y2="130" stroke="#5a6b7e" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- Pass? → wk push (Yes) -->
+  <line x1="678" y1="130" x2="716" y2="130" stroke="#0b8378" stroke-width="1.5" marker-end="url(#ah-g)"/>
+  <text x="697" y="122" text-anchor="middle" font-size="11" fill="#0b8378" font-weight="600">Yes</text>
+
+  <!-- Pass? → Fix (No — enters Fix from right) -->
+  <path d="M650,151 L650,224 L632,224" stroke="#FC9867" stroke-width="1.5" fill="none" marker-end="url(#ah-r)"/>
+  <text x="659" y="192" font-size="11" fill="#b3500f" font-weight="600">No</text>
+
+  <!-- Fix → wk lint (dashed return — enters wk lint from bottom) -->
+  <path d="M534,205 L534,150" stroke="#5a6b7e" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#ah)"/>
+
+  <!-- wk push → AI Agent (loopback — dashed) -->
+  <path d="M762,149 L762,252 L82,252 L82,155" stroke="#5a6b7e" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#ah)"/>
+
+  <!-- ── Nodes ── -->
+
+  <!-- Recipe Skills -->
+  <rect x="10" y="15" width="145" height="44" rx="7" fill="#D3EEFA" stroke="#1D60CA" stroke-width="1.5"/>
+  <text x="82" y="36" text-anchor="middle" font-size="12.5" fill="#1D60CA" font-weight="600">Recipe Skills</text>
+  <text x="82" y="52" text-anchor="middle" font-size="10" fill="#1D60CA">context + lint rules</text>
+
+  <!-- AI Agent (agent developer — purple, first-class) -->
+  <rect x="10" y="105" width="145" height="50" rx="7" fill="#efeaff" stroke="#6932ff" stroke-width="1.5"/>
+  <text x="82" y="128" text-anchor="middle" font-size="12.5" fill="#6932ff" font-weight="600">AI Agent</text>
+  <text x="82" y="146" text-anchor="middle" font-size="10" fill="#8b6fff">Claude · Cursor · Codex</text>
+
+  <!-- Write Recipe -->
+  <rect x="195" y="111" width="110" height="38" rx="7" fill="#FFFFFF" stroke="#bcd0de" stroke-width="1.5"/>
+  <text x="250" y="134" text-anchor="middle" font-size="12.5" fill="#083763" font-weight="500">Write Recipe</text>
+
+  <!-- Developer / Recipe Visualizer (human-in-the-loop — teal) -->
+  <rect x="340" y="105" width="135" height="50" rx="7" fill="#B3FEF7" stroke="#0b8378" stroke-width="1.5"/>
+  <text x="407" y="128" text-anchor="middle" font-size="12.5" fill="#0b8378" font-weight="600">Developer</text>
+  <text x="407" y="146" text-anchor="middle" font-size="10" fill="#0b8378">Recipe Visualizer</text>
+
+  <!-- wk lint -->
+  <rect x="510" y="111" width="88" height="38" rx="7" fill="#D3EEFA" stroke="#1D60CA" stroke-width="1.5"/>
+  <text x="554" y="134" text-anchor="middle" font-size="13" fill="#1D60CA" font-weight="600">wk lint</text>
+
+  <!-- Pass? diamond (cx=650, cy=130, half-w=28, half-h=21) -->
+  <polygon points="650,109 678,130 650,151 622,130" fill="#F2F2F2" stroke="#bcd0de" stroke-width="1.5"/>
+  <text x="650" y="134" text-anchor="middle" font-size="12" fill="#5a6b7e" font-weight="500">Pass?</text>
+
+  <!-- wk push -->
+  <rect x="718" y="111" width="88" height="38" rx="7" fill="#D3EEFA" stroke="#1D60CA" stroke-width="1.5"/>
+  <text x="762" y="134" text-anchor="middle" font-size="13" fill="#1D60CA" font-weight="600">wk push</text>
+
+  <!-- Fix → re-lint -->
+  <rect x="510" y="205" width="120" height="38" rx="7" fill="#FDEFE4" stroke="#FC9867" stroke-width="1.5"/>
+  <text x="570" y="228" text-anchor="middle" font-size="12" fill="#b3500f" font-weight="500">Fix → re-lint</text>
+</svg>
