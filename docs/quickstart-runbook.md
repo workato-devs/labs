@@ -68,14 +68,10 @@ plus a verify step. The two "things you might see" notes that strand newcomers:
 brew install workato-devs/tap/wk
 brew install workato-devs/tap/recipe-lint
 wk plugins install recipe-lint
-# Recipe Visualizer — download the latest .vsix from the repo's Releases, then:
-code --install-extension ./recipe-visualizer-1.0.0.vsix   # or cursor / windsurf
+code --install-extension WorkatoLabs.recipe-visualizer   # or cursor / windsurf
 wk version
 wk plugins list      # should list recipe-lint
 ```
-
-> Recipe Visualizer is installed from a `.vsix` (not the marketplace yet) — grab the latest from
-> [recipe-visualizer → Releases](https://github.com/workato-devs/recipe-visualizer/releases).
 
 **No Workato account?** Sign up free: `https://app.trial.workato.com/users/sign_up_trial?utm_term=sign_in`
 — a Developer Sandbox workspace. Trial users authenticate with `--region trial` in Beat 1.
