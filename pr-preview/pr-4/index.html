@@ -56,7 +56,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--w-darkest-blue);
+    background: var(--w-dark-blue);
     color: #fff;
     font-family: var(--w-font-body);
     font-size: 17px;
@@ -80,9 +80,10 @@
 
   /* ─── Surface bands — the brand's light/dark rhythm ─── */
   .band { position: relative; }
-  .band--deep  { background: var(--w-darkest-blue); color: #fff; }
-  .band--navy  { background: var(--w-dark-blue);    color: #fff; }
-  .band--light { background: var(--w-sand);         color: var(--w-ink); }
+  /* One solid blue across the page — bands kept as structural hooks only */
+  .band--deep  { background: var(--w-dark-blue); color: #fff; }
+  .band--navy  { background: var(--w-dark-blue); color: #fff; }
+  .band--light { background: var(--w-dark-blue); color: #fff; }
 
   /* ─── Signature gradient seam between bands ─── */
   .teal-rule {
@@ -845,56 +846,8 @@
     font-size: 12px;
   }
 
-  /* ─── Light-band overrides: navy ink, real brand cards ─── */
-  .band--light .section-desc { color: var(--w-ink-muted); }
-
-  /* eyebrow labels carry a per-section hue (spectrum as punctuation) */
-  .band--light .section-label { color: var(--w-royal-blue); }
-  /* the principles teaser is a dark navy card inside the light band — keep its eyebrow teal, not royal-on-navy */
-  .band--light .principles-teaser .section-label { color: var(--w-hero-teal); }
+  /* Toolkit eyebrow keeps its coral accent against the solid blue */
   .section-label--coral { color: var(--w-icecream) !important; }
-
-  /* workflow diagram on light */
-  .band--light .workflow-visual {
-    background: var(--w-white);
-    border-color: rgba(8, 55, 99, 0.10);
-  }
-  .band--light .wf-label { color: var(--w-dark-blue); }
-  .band--light .wf-tool  { color: var(--w-ink-muted); }
-  .band--light .wf-arrow { color: rgba(8, 55, 99, 0.25); }
-
-  /* tool cards → baby-blue brand cards */
-  .band--light .tool-card {
-    background: var(--w-baby-blue);
-    border-color: rgba(8, 55, 99, 0.08);
-  }
-  .band--light .tool-card:hover {
-    border-color: rgba(29, 96, 202, 0.35);
-    background: #c8e7f6;
-  }
-  .band--light .tool-card p { color: var(--w-ink-muted); }
-  .band--light .tool-card .tool-tag { color: rgba(8, 55, 99, 0.7); }
-
-  /* darken icon glyphs so they hold contrast on baby-blue */
-  .band--light .tool-icon--teal   { background: rgba(33, 219, 200, 0.22); color: #0b8378; }
-  .band--light .tool-icon--lime   { background: rgba(171, 220, 3, 0.22);  color: #6f8f00; }
-  .band--light .tool-icon--blue   { background: rgba(29, 96, 202, 0.14);  color: var(--w-royal-blue); }
-  .band--light .tool-icon--purple { background: rgba(105, 50, 255, 0.12); color: #6932ff; }
-
-  /* repos → white cards on sand */
-  .band--light .repo-link {
-    background: var(--w-white);
-    border-color: rgba(8, 55, 99, 0.08);
-    color: var(--w-dark-blue);
-  }
-  .band--light .repo-link:hover {
-    border-color: rgba(29, 96, 202, 0.35);
-    background: var(--w-white);
-    box-shadow: 0 4px 16px rgba(8, 55, 99, 0.07);
-  }
-  .band--light .repo-link .repo-name { color: var(--w-royal-blue); }
-  .band--light .repo-link .repo-desc { color: var(--w-ink-muted); }
-  .band--light .repo-link .repo-icon { color: rgba(8, 55, 99, 0.30); }
 
   /* ─── Responsive ─── */
   @media (max-width: 680px) {
@@ -931,6 +884,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#install">Install</a></li>
+      <li><a href="./quickstart.html">Quickstart</a></li>
       <li><a href="#toolkit">Toolkit</a></li>
       <li><a href="#repos">Repos</a></li>
       <li><a href="./principles.html">Principles</a></li>
