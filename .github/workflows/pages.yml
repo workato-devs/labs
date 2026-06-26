@@ -6,16 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: pages-main
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -25,23 +23,20 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true
 
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v6
-
       - name: Build
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        run: bundle exec jekyll build --baseurl "/labs"
         env:
           JEKYLL_ENV: production
 
-      - uses: actions/upload-pages-artifact@v5
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - id: deploy
-        uses: actions/deploy-pages@v5
+      # Publish the built site to the root of the gh-pages branch.
+      # keep_files: true preserves the pr-preview/ subdirectories created
+      # by the PR Preview workflow so live previews are not wiped on a main deploy.
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          keep_files: true
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"

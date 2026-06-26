@@ -1,0 +1,47 @@
+name: PR Preview
+
+# Builds each pull request and publishes it to a per-PR subpath on the
+# gh-pages branch, e.g. https://workato-devs.github.io/labs/pr-preview/pr-12/
+# The preview URL is auto-commented on the PR, and torn down when the PR
+# is merged or closed. Stakeholders only need the URL — no repo access.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: pr-preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ruby/setup-ruby@v1
+        if: github.event.action != 'closed'
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      # baseurl must point at the preview subpath so Jekyll's url filters
+      # resolve correctly. (Internal links here are relative, so this is
+      # belt-and-suspenders, but keeps any generated URLs correct.)
+      - name: Build
+        if: github.event.action != 'closed'
+        run: bundle exec jekyll build --baseurl "/labs/pr-preview/pr-${{ github.event.number }}"
+        env:
+          JEKYLL_ENV: production
+
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./_site
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
