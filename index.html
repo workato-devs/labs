@@ -247,6 +247,20 @@
     gap: 18px;
   }
 
+  .compat-strip .compat-logo {
+    width: auto;
+    display: block;
+    opacity: 0.62;
+    transition: opacity 0.2s;
+  }
+
+  .compat-strip .compat-items li:hover .compat-logo { opacity: 1; }
+
+  .compat-strip .compat-more {
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+  }
+
   /* teal dot separators between tools */
   .compat-strip .compat-items li:not(:last-child)::after {
     content: "";
@@ -344,7 +358,7 @@
 
   /* ─── What's in the box ─── */
   .toolkit-section {
-    padding: 80px 0;
+    padding: 40px 0 80px;
   }
 
   .section-label {
@@ -619,7 +633,7 @@
 
   /* ─── Workflow diagram ─── */
   .workflow-section {
-    padding: 64px 0 80px;
+    padding: 64px 0 24px;
   }
 
   .workflow-visual {
@@ -798,6 +812,10 @@
     line-height: 1.6;
   }
 
+  .footer-star {
+    margin-top: 20px;
+  }
+
   .footer-cols {
     display: flex;
     gap: 56px;
@@ -885,7 +903,7 @@
     <ul class="nav-links">
       <li><a href="#install">Install</a></li>
       <li><a href="./quickstart.html">Quickstart</a></li>
-      <li><a href="#toolkit">Toolkit</a></li>
+      <li><a href="#toolkit">Tools</a></li>
       <li><a href="#repos">Repos</a></li>
       <li><a href="./principles.html">Principles</a></li>
       <li><a href="https://github.com/workato-devs/labs/discussions">Discuss</a></li>
@@ -907,24 +925,17 @@
     </p>
     <div class="cta-row">
       <a href="#install" class="btn btn--primary">Get started</a>
-      <a href="https://github.com/workato-devs/labs" class="btn btn--ghost star-btn" id="starBtn" aria-label="Star Workato Labs on GitHub">
-        <img src="./assets/icon-github.svg" width="16" height="16" alt="">
-        <span>Star on GitHub</span>
-        <span class="star-pill" id="starPill" hidden>
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-5.6 3.3 1.5-6.4-5-4.3 6.5-.5L12 3.4l2.6 6 6.5.5-5 4.3 1.5 6.4z"/></svg>
-          <span id="starCount">—</span>
-        </span>
-      </a>
     </div>
 
     <div class="compat-strip">
       <span class="compat-label">Works with</span>
       <ul class="compat-items">
-        <li>VS Code</li>
-        <li>Cursor</li>
-        <li>Windsurf</li>
-        <li>Claude Code</li>
-        <li>Codex</li>
+        <li><img class="compat-logo" src="./assets/logos/vscode.png" alt="VS Code" height="18"></li>
+        <li><img class="compat-logo" src="./assets/logos/cursor.png" alt="Cursor" height="18"></li>
+        <li><img class="compat-logo compat-logo--windsurf" src="./assets/logos/windsurf.svg" alt="Windsurf" height="13"></li>
+        <li><img class="compat-logo" src="./assets/logos/claude-code.png" alt="Claude Code" height="18"></li>
+        <li><img class="compat-logo" src="./assets/logos/codex.png" alt="Codex" height="18"></li>
+        <li class="compat-more">and more</li>
       </ul>
     </div>
   </section>
@@ -994,7 +1005,7 @@
           <h3>wk CLI</h3>
           <span class="tool-tag">Go</span>
         </div>
-        <p>A unified CLI for Workato platform operations and recipe development. <code>wk pull</code>, <code>wk push</code>, <code>wk diff</code>, and <code>wk status</code> across workspaces. Plugin system for extending with custom commands.</p>
+        <p>The command line for building and managing Workato recipes. Pull, push, diff, and check recipe status across workspaces with <code>wk pull</code>, <code>wk push</code>, <code>wk diff</code>, and <code>wk status</code>. Extend it with custom commands through a plugin system.</p>
       </div>
 
       <div class="tool-card">
@@ -1003,7 +1014,7 @@
           <h3>Recipe Linter</h3>
           <span class="tool-tag">Go</span>
         </div>
-        <p>Deterministic validation compiled into <code>wk lint</code>. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.</p>
+        <p>Static validation built into <code>wk lint</code>. Catches datapill syntax errors, schema mismatches, and structural issues before you deploy—giving you checks that AI agents can't reliably perform on their own.</p>
       </div>
 
       <div class="tool-card">
@@ -1012,7 +1023,7 @@
           <h3>Recipe Skills</h3>
           <span class="tool-tag">Markdown</span>
         </div>
-        <p>Agent-consumable knowledge for recipe authoring. Connector config, datapill syntax, control flow, error handling. Also home to connector-specific lint rules. Point your coding agent at the skills directory.</p>
+        <p>Knowledge for coding agents building Workato recipes. Covers connector configuration, datapill syntax, control flow, error handling, and connector-specific lint rules. Point your coding agent at the skills directory before it starts writing recipes.</p>
       </div>
 
       <div class="tool-card">
@@ -1021,7 +1032,7 @@
           <h3>Recipe Visualizer</h3>
           <span class="tool-tag">VS Code extension</span>
         </div>
-        <p>IDE extension rendering recipe JSON as interactive workflow graphs. Click a node, navigate to the source. Export graphs as images. VS Code, Cursor, Windsurf.</p>
+        <p>View recipe JSON as an interactive workflow graph inside your editor. Click any step to jump to the source, inspect recipe structure visually, and export diagrams as images. Works with VS Code, Cursor, and Windsurf.</p>
       </div>
 
     </div>
@@ -1038,7 +1049,7 @@
     <span class="section-label">Get started</span>
     <h2 class="section-title">Install the toolkit</h2>
     <p class="section-desc">
-      Four steps, each using a command you already know. No install scripts, no ambient dependencies, no magic.
+      Get up and running in four commands. No install scripts, no hidden dependencies—just the tools you need.
     </p>
 
     <div class="install-steps">
@@ -1245,19 +1256,28 @@
         <p class="footer-tagline">
           An open-source toolkit for building recipes with the AI coding tools you already use.
         </p>
+        <a href="https://github.com/workato-devs/labs" class="btn btn--ghost footer-star" id="footerStarBtn" aria-label="Star Workato Labs on GitHub">
+          <img src="./assets/icon-github.svg" width="16" height="16" alt="">
+          <span>Star on GitHub</span>
+          <span class="star-pill" id="footerStarPill" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-5.6 3.3 1.5-6.4-5-4.3 6.5-.5L12 3.4l2.6 6 6.5.5-5 4.3 1.5 6.4z"/></svg>
+            <span id="footerStarCount">—</span>
+          </span>
+        </a>
       </div>
 
       <nav class="footer-cols" aria-label="Footer">
         <div class="footer-col">
           <span class="footer-col-label">Toolkit</span>
           <a href="#install">Install</a>
+          <a href="./quickstart.html">Quickstart</a>
           <a href="#toolkit">Tools</a>
-          <a href="#repos">Repositories</a>
+          <a href="#repos">Repos</a>
         </div>
         <div class="footer-col">
           <span class="footer-col-label">Project</span>
           <a href="./principles.html">Principles</a>
-          <a href="https://github.com/workato-devs/labs/discussions">Discussions</a>
+          <a href="https://github.com/workato-devs/labs/discussions">Discuss</a>
           <a href="https://github.com/workato-devs">GitHub</a>
         </div>
       </nav>
@@ -1284,14 +1304,18 @@ function switchTab(btn, group) {
 // Live GitHub star count on the secondary CTA (graceful — hidden if it fails)
 (function () {
   var REPO = 'workato-devs/labs';
-  var pill = document.getElementById('starPill');
-  var out = document.getElementById('starCount');
-  if (!pill || !out) return;
+  var pairs = [
+    { pill: document.getElementById('footerStarPill'), out: document.getElementById('footerStarCount') }
+  ].filter(function (p) { return p.pill && p.out; });
+  if (!pairs.length) return;
 
   function show(n) {
     if (!(n > 0)) return; // hide the chip at 0 stars — avoids "unpopular" optics at launch
-    out.textContent = n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n);
-    pill.hidden = false;
+    var label = n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n);
+    pairs.forEach(function (p) {
+      p.out.textContent = label;
+      p.pill.hidden = false;
+    });
   }
 
   try {

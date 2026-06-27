@@ -79,7 +79,7 @@
   }
   .qs-hero h1 em { font-style: italic; font-weight: 600; color: var(--w-hero-teal); }
   .qs-hero .lead { font-size: clamp(17px, 2.1vw, 20px); line-height: 1.55; color: rgba(255,255,255,0.82); max-width: 680px; }
-  .qs-hero .lead strong { color: #fff; font-weight: 700; }
+  .qs-hero .lead strong { color: var(--w-icecream); font-weight: 600; }
   .qs-hero .lead code { font-family: var(--w-font-mono); font-size: 0.9em; color: var(--w-hero-teal); }
 
   /* "your agent" portability note */
@@ -283,7 +283,7 @@
 <div class="container">
   <header class="qs-hero">
     <span class="kicker">Quickstart</span>
-    <h1>One sentence in.<br>One <em>proven tool</em> out.</h1>
+    <h1>One prompt in.<br>One <em>proven automation</em> out.</h1>
     <p class="lead">
       You set up, hand off one sentence, and your agent runs the build loop — compose, lint, deploy,
       and call the live <code>onboard_new_hire</code> endpoint to prove it works. <strong>You watch as
@@ -292,8 +292,9 @@
       what only Workato makes possible.
     </p>
     <div class="portability">
-      Examples show one agent for concreteness, but every step is the same in <strong>your agent</strong> —
-      Claude, Cursor, Windsurf, Codex, or any other. The toolkit is the constant; the agent is your choice.
+      Examples use one agent for concreteness, but the toolkit is <strong>open by design</strong> — no
+      vendor-specific commands, nothing tied to one agent. Use it with Claude, Cursor, Windsurf, Codex, or
+      any other. The toolkit is the constant; the agent is your choice.
     </div>
   </header>
 </div>
@@ -632,10 +633,11 @@
 
     <!-- The payoff — always visible -->
     <div class="win">
-      <span class="win-label">The moment nobody else can show</span>
-      <p>Your agent called <strong>onboard_new_hire</strong> over HTTP, got <code>success:true</code> back, and
-      the new hire is in <code>#team-welcome</code> — a real governed call against the deployed endpoint, from
-      the terminal, no human. The tool it just built, now proving itself.</p>
+      <span class="win-label">What success looks like</span>
+      <p>Your agent might take a different path each run — but a successful one ends the same way: it calls
+      <strong>onboard_new_hire</strong> over HTTP, gets <code>success:true</code> back, and the demo new hire
+      appears in <code>#team-welcome</code>. That's a real governed call against the deployed endpoint — see
+      it, and the Salesforce&nbsp;+&nbsp;Slack orchestration you built is working.</p>
     </div>
 
   </section>
