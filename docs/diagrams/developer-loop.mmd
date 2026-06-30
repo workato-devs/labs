@@ -1,0 +1,36 @@
+%% The Developer Loop — Labs tools supporting a human developer and an agent developer.
+%% Text-native fallback for docs/decks. The canonical, design-iterated artifact is
+%% developer-loop.svg — keep this in sync with it (see README.md). Class colors map to
+%% Labs brand tokens: tools = royal blue, human = teal, agent = purple, fix = icecream.
+flowchart LR
+  RS["Recipe Skills<br/>context + lint rules"]
+  AGENT["AI Agent<br/>Claude · Cursor · Codex"]
+  WR["Write Recipe"]
+  DEV["Developer<br/>Recipe Visualizer"]
+  LINT["wk lint"]
+  PASS{"Pass?"}
+  PUSH["wk push"]
+  FIX["Fix → re-lint"]
+
+  RS -- context --> AGENT
+  RS -. lint rules .-> LINT
+  AGENT --> WR
+  WR --> DEV
+  DEV --> LINT
+  LINT --> PASS
+  PASS -- Yes --> PUSH
+  PASS -- No --> FIX
+  FIX -. re-lint .-> LINT
+  PUSH -. ship + learn .-> AGENT
+
+  classDef tool fill:#D3EEFA,stroke:#1D60CA,color:#1D60CA;
+  classDef human fill:#B3FEF7,stroke:#0b8378,color:#0b8378;
+  classDef agent fill:#efeaff,stroke:#6932ff,color:#6932ff;
+  classDef fix fill:#FDEFE4,stroke:#FC9867,color:#b3500f;
+  classDef neutral fill:#FFFFFF,stroke:#bcd0de,color:#083763;
+
+  class RS,LINT,PUSH tool;
+  class DEV human;
+  class AGENT agent;
+  class FIX fix;
+  class WR,PASS neutral;

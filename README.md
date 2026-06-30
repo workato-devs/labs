@@ -4,13 +4,15 @@
 
 An open-source developer toolkit for building, validating, visualizing, and managing Workato recipes — designed for humans and coding agents alike.
 
-> 🟢 **Beta — Design Partner Program**
-
 ---
 
 ## The workflow
 
-Four tools that replace the loop of guess, push, break, repeat.
+Four tools that replace the loop of guess, push, break, repeat — one quality loop shared by a human developer and a coding agent.
+
+<p align="center">
+  <img src="docs/diagrams/developer-loop.svg" alt="The Developer Loop: Recipe Skills feeds context to the AI Agent and lint rules to wk lint. The AI Agent writes a recipe, the Developer inspects it in the Recipe Visualizer, wk lint validates it; on pass it ships via wk push, on fail it routes to Fix and re-lint." width="760">
+</p>
 
 **Agent writes recipe** (recipe-skills) → **Developer inspects** (visualizer) → **Linter validates** (`wk lint`) → **CLI pushes** (`wk push`)
 
@@ -42,7 +44,7 @@ wk version
 <details>
 <summary>Manual install</summary>
 
-Download and extract the binary for your platform from [Releases](https://github.com/workato-devs/wk-cli-beta/releases), then:
+Download and extract the binary for your platform from [Releases](https://github.com/workato-devs/wk/releases), then:
 
 ```bash
 xattr -d com.apple.quarantine /path/to/wk      # macOS: allow the binary to run
@@ -75,7 +77,7 @@ wk plugins install recipe-lint
 <details>
 <summary>Manual install</summary>
 
-Download and extract the archive for your platform from [Releases](https://github.com/workato-devs/wk-lint-beta/releases). The binary inside is named `recipe-lint` (not `wk-lint`).
+Download and extract the archive for your platform from [Releases](https://github.com/workato-devs/recipe-lint/releases). The binary inside is named `recipe-lint` (not `wk-lint`).
 
 ```bash
 sudo mv /path/to/extracted-folder /usr/local/lib/recipe-lint  # move to a permanent location
@@ -101,15 +103,27 @@ git clone https://github.com/workato-devs/recipe-skills.git
 
 IDE extension that renders recipe JSON as interactive workflow graphs. Works in VS Code, Cursor, and Windsurf.
 
-Download the `.vsix` from this repo's [`downloads/`](https://github.com/workato-devs/labs/tree/main/downloads) folder, then:
+Install from your editor's marketplace — search **Recipe Visualizer** in the Extensions panel ([VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=WorkatoLabs.recipe-visualizer) · [Open VSX](https://open-vsx.org/extension/WorkatoLabs/recipe-visualizer)), or from the command line:
 
 ```bash
 # VS Code
-code --install-extension ./recipe-visualizer-0.5.3.vsix
+code --install-extension WorkatoLabs.recipe-visualizer
 
-# Cursor
-cursor --install-extension ./recipe-visualizer-0.5.3.vsix
+# Cursor / Windsurf use the same command
+cursor --install-extension WorkatoLabs.recipe-visualizer
 ```
+
+<details>
+<summary>Manual install (.vsix)</summary>
+
+Download the latest `.vsix` from the [recipe-visualizer releases](https://github.com/workato-devs/recipe-visualizer/releases), then:
+
+```bash
+# VS Code — replace code with cursor or windsurf as needed
+code --install-extension ./recipe-visualizer-1.0.0.vsix
+```
+
+</details>
 
 ---
 
@@ -123,10 +137,10 @@ A unified CLI for Workato platform operations and recipe development. `wk pull`,
 **Recipe Linter** · Go
 Deterministic validation via `wk lint`. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.
 
-**Recipe Skills** · 7 connectors
+**Recipe Skills** · Markdown
 Agent-consumable knowledge for recipe authoring. Connector config, datapill syntax, control flow, error handling. Also home to connector-specific lint rules. Point your coding agent at the skills directory.
 
-**Recipe Visualizer** · .vsix
+**Recipe Visualizer** · VS Code extension
 IDE extension rendering recipe JSON as interactive workflow graphs. Click a node, navigate to the source. Export graphs as images. VS Code, Cursor, Windsurf.
 
 ---
@@ -135,10 +149,11 @@ IDE extension rendering recipe JSON as interactive workflow graphs. Click a node
 
 | Repo | Description |
 |------|-------------|
-| [workato-labs](https://github.com/workato-devs/labs) | Hub — docs, downloads, .vsix extensions |
-| [wk](https://github.com/workato-devs/wk-cli-beta) | CLI — Go binary, workspace ops |
-| [recipe-skills](https://github.com/workato-devs/recipe-skills) | Agent knowledge — 7 connector skill sets |
-| [wk-lint](https://github.com/workato-devs/wk-lint-beta) | Recipe linter — deterministic validation |
+| [workato-labs](https://github.com/workato-devs/labs) | Hub — landing site, docs, install guide |
+| [wk](https://github.com/workato-devs/wk) | CLI — Go binary, workspace ops |
+| [recipe-skills](https://github.com/workato-devs/recipe-skills) | Agent knowledge — connector skill sets |
+| [recipe-lint](https://github.com/workato-devs/recipe-lint) | Recipe linter — deterministic validation |
+| [recipe-visualizer](https://github.com/workato-devs/recipe-visualizer) | IDE extension — interactive recipe graphs |
 
 ---
 
