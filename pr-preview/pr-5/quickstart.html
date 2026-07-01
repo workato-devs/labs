@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quickstart — Workato Labs</title>
+<meta name="description" content="From one sentence of intent to a deployed, proven onboard_new_hire endpoint — the Workato Labs build loop, end to end.">
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,600;0,700&family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&family=Inconsolata:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --w-hero-teal: #67EADD;
+    --w-dark-teal: #21DBC8;
+    --w-dark-blue: #083763;
+    --w-darkest-blue: #042A4E;
+    --w-royal-blue: #1D60CA;
+    --w-medium-blue: #69D2FF;
+    --w-dewy-purple: #C3A9FF;
+    --w-icecream: #FC9867;
+    --w-lavender: #EF80E3;
+    --w-lime: #ABDC03;
+    --w-gradient: linear-gradient(90deg, var(--w-hero-teal), var(--w-royal-blue) 45%, var(--w-dewy-purple) 72%, #EF80E3);
+    --w-font-display: 'Besley', Georgia, serif;
+    --w-font-heading: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    --w-font-body: 'Nunito Sans', system-ui, sans-serif;
+    --w-font-mono: 'Inconsolata', ui-monospace, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--w-dark-blue);
+    color: #fff;
+    font-family: var(--w-font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .atmosphere {
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(60% 50% at 80% 4%, rgba(103,234,221,0.08) 0%, transparent 60%),
+      radial-gradient(55% 45% at 8% 36%, rgba(29,96,202,0.16) 0%, transparent 65%),
+      var(--w-dark-blue);
+  }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+  .container--wide { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+
+  .teal-rule { width: 100%; height: 2px; background: var(--w-gradient); opacity: 0.85; }
+
+  /* ─── Nav ─── */
+  nav { padding: 28px 0; display: flex; align-items: center; justify-content: space-between; }
+  nav .logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
+  nav .logo .labs-logo { height: 34px; width: auto; display: block; }
+  nav .nav-links { display: flex; gap: 28px; list-style: none; }
+  nav .nav-links a { font-family: var(--w-font-heading); color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  nav .nav-links a:hover, nav .nav-links a.current { color: var(--w-hero-teal); }
+
+  /* ─── Hero ─── */
+  .qs-hero { padding: 64px 0 28px; }
+  .kicker {
+    font-family: var(--w-font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--w-hero-teal);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+  }
+  .kicker::before { content: ""; width: 28px; height: 1px; background: var(--w-hero-teal); opacity: 0.6; }
+  .qs-hero h1 {
+    font-family: var(--w-font-display); font-size: clamp(38px, 6.4vw, 64px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px;
+  }
+  .qs-hero h1 em { font-style: italic; font-weight: 600; color: var(--w-hero-teal); }
+  .qs-hero .lead { font-size: clamp(17px, 2.1vw, 20px); line-height: 1.55; color: rgba(255,255,255,0.82); max-width: 680px; }
+  .qs-hero .lead strong { color: var(--w-icecream); font-weight: 600; }
+  .qs-hero .lead code { font-family: var(--w-font-mono); font-size: 0.9em; color: var(--w-hero-teal); }
+
+  /* "your agent" portability note */
+  .portability {
+    margin-top: 24px; padding: 13px 18px;
+    border: 1px solid rgba(103,234,221,0.22); border-radius: 10px;
+    background: rgba(103,234,221,0.04);
+    font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.55;
+  }
+  .portability strong { color: var(--w-hero-teal); font-weight: 600; }
+
+  /* ─── Flow: compact, collapsible, two-lane ─── */
+  .flow { padding: 12px 0 28px; }
+
+  .flow-tools { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+  .flow-legend { display: flex; gap: 18px; font-family: var(--w-font-mono); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); flex-wrap: wrap; }
+  .flow-legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .flow-legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .lg-you { background: var(--w-hero-teal); }
+  .lg-agent { background: var(--w-dewy-purple); }
+  .lg-move { background: var(--w-lavender); }
+  .expand-all {
+    font-family: var(--w-font-mono); font-size: 12px; color: rgba(255,255,255,0.6);
+    background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px;
+    padding: 5px 12px; cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+  }
+  .expand-all:hover { color: var(--w-hero-teal); border-color: rgba(103,234,221,0.4); }
+
+  /* phase header */
+  .phase { font-family: var(--w-font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 26px 0 8px; display: flex; align-items: center; gap: 12px; }
+  .phase::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+  .phase--agent { color: var(--w-dewy-purple); }
+  .phase--agent::after { background: rgba(195,169,255,0.2); }
+
+  /* a step = <details> row */
+  .step { border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; margin: 7px 0; background: rgba(255,255,255,0.02); overflow: hidden; transition: border-color 0.2s, background 0.2s; }
+  .step[open] { border-color: rgba(103,234,221,0.22); background: rgba(255,255,255,0.03); }
+  .step > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 13px; padding: 13px 16px; }
+  .step > summary::-webkit-details-marker { display: none; }
+  .step > summary:hover { background: rgba(255,255,255,0.02); }
+  .step-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .step-n { font-family: var(--w-font-mono); font-size: 13px; font-weight: 700; min-width: 16px; text-align: center; flex-shrink: 0; }
+  .step-title { font-family: var(--w-font-heading); font-size: 15px; font-weight: 600; color: #fff; flex-shrink: 0; }
+  .step-role { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
+  .step-cmd { font-family: var(--w-font-mono); font-size: 12.5px; color: rgba(255,255,255,0.42); margin-left: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; padding-left: 12px; }
+  .step-chev { flex-shrink: 0; color: rgba(255,255,255,0.35); transition: transform 0.2s; font-size: 11px; }
+  .step[open] .step-chev { transform: rotate(90deg); }
+  .step-body { padding: 2px 18px 18px; }
+  .step-body > *:first-child { margin-top: 6px; }
+
+  /* role color coding */
+  .step--you .step-dot { background: var(--w-hero-teal); }
+  .step--you .step-n { color: var(--w-hero-teal); }
+  .step--you .step-role { color: var(--w-hero-teal); background: rgba(103,234,221,0.12); }
+  .step--agent .step-dot { background: var(--w-dewy-purple); }
+  .step--agent .step-n { color: var(--w-dewy-purple); }
+  .step--agent .step-role { color: var(--w-dewy-purple); background: rgba(195,169,255,0.14); }
+  .step--move { background: rgba(239,128,227,0.06); border-color: rgba(239,128,227,0.32); border-left-width: 3px; border-left-color: var(--w-lavender); }
+  .step--move[open] { background: rgba(239,128,227,0.09); border-color: rgba(239,128,227,0.44); border-left-color: var(--w-lavender); }
+  .step--move .step-dot { background: var(--w-lavender); }
+  .step--move .step-n { color: var(--w-lavender); }
+  .step--move .step-role { color: var(--w-lavender); background: rgba(239,128,227,0.16); }
+
+  /* agent lane — indented, dashed rail = "behind the scenes" */
+  .lane-agent { margin-left: 20px; padding-left: 20px; border-left: 2px dashed rgba(195,169,255,0.3); }
+
+  .flow a { color: var(--w-hero-teal); text-decoration: none; border-bottom: 1px solid rgba(103,234,221,0.45); transition: border-color 0.2s, color 0.2s; }
+  .flow a:hover { color: #fff; border-color: var(--w-hero-teal); }
+
+  /* step body text */
+  .step-body p { color: rgba(255,255,255,0.74); font-size: 15px; line-height: 1.65; margin: 12px 0; }
+  .step-body p code, .step-body li code { font-family: var(--w-font-mono); font-size: 0.88em; color: var(--w-medium-blue); background: rgba(105,210,255,0.1); padding: 1px 6px; border-radius: 4px; }
+  .step-body ul { margin: 12px 0 12px 4px; padding-left: 20px; color: rgba(255,255,255,0.74); }
+  .step-body li { margin: 6px 0; line-height: 1.55; }
+
+  /* ─── Code blocks + copy ─── */
+  .code-wrap { position: relative; margin: 14px 0; }
+  .code-block {
+    background: rgba(0,0,0,0.32); border: 1px solid rgba(255,255,255,0.08); border-radius: 9px;
+    padding: 15px 18px; font-family: var(--w-font-mono); font-size: 13px;
+    color: var(--w-hero-teal); overflow-x: auto; line-height: 1.8;
+  }
+  .code-block .prompt { color: rgba(255,255,255,0.3); user-select: none; }
+  .code-block .cmd { color: #fff; }
+  .code-block .flag { color: var(--w-medium-blue); }
+  .code-block .string { color: var(--w-lime); }
+  .code-block .comment { color: rgba(255,255,255,0.34); }
+  .copy-btn {
+    position: absolute; top: 8px; right: 8px; z-index: 2; display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 9px; font-family: var(--w-font-mono); font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.55); background: rgba(8,55,99,0.92); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px; cursor: pointer; opacity: 0; transition: opacity 0.18s, color 0.18s, border-color 0.18s;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  }
+  .code-wrap:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+  .copy-btn:hover { color: var(--w-hero-teal); border-color: rgba(103,234,221,0.4); }
+  .copy-btn.copied { color: var(--w-lime); border-color: rgba(171,220,3,0.45); opacity: 1; }
+  .copy-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+  @media (hover: none) { .copy-btn { opacity: 1; } }
+
+  /* ─── Callouts ─── */
+  .note { border-left: 3px solid; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; font-size: 14px; line-height: 1.6; }
+  .note .note-label { font-family: var(--w-font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .note p { color: rgba(255,255,255,0.78); font-size: 14px; margin: 6px 0 0; }
+  .note code { font-family: var(--w-font-mono); font-size: 0.9em; padding: 1px 5px; border-radius: 4px; }
+  .note--tip   { border-color: var(--w-hero-teal);   background: rgba(103,234,221,0.06); }
+  .note--tip .note-label { color: var(--w-hero-teal); }
+  .note--tip code { color: var(--w-hero-teal); background: rgba(103,234,221,0.12); }
+  .note--warn  { border-color: var(--w-icecream);    background: rgba(252,152,103,0.07); }
+  .note--warn .note-label { color: var(--w-icecream); }
+  .note--warn code { color: var(--w-icecream); background: rgba(252,152,103,0.12); }
+  .note--gate  { border-color: var(--w-medium-blue); background: rgba(105,210,255,0.06); }
+  .note--gate .note-label { color: var(--w-medium-blue); }
+  .note--gate code { color: var(--w-medium-blue); background: rgba(105,210,255,0.12); }
+
+  /* the win banner — the payoff, always visible */
+  .win {
+    margin: 24px 0 4px; padding: 20px 24px; border-radius: 12px;
+    background: linear-gradient(120deg, rgba(103,234,221,0.12), rgba(195,169,255,0.09));
+    border: 1px solid rgba(103,234,221,0.32);
+  }
+  .win .win-label { font-family: var(--w-font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w-hero-teal); display: block; margin-bottom: 6px; }
+  .win p { color: rgba(255,255,255,0.92); font-size: 16px; margin: 0; line-height: 1.55; }
+  .win strong { color: #fff; }
+  .win code { font-family: var(--w-font-mono); color: var(--w-lime); font-size: 0.9em; }
+
+  /* ─── Collapsible "stuck" section ─── */
+  .stuck { margin: 8px 0; }
+  .stuck > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; font-family: var(--w-font-heading); font-weight: 600; font-size: clamp(20px, 2.6vw, 26px); color: #fff; }
+  .stuck > summary::-webkit-details-marker { display: none; }
+  .stuck > summary .s-chev { color: var(--w-icecream); font-size: 14px; transition: transform 0.2s; }
+  .stuck[open] > summary .s-chev { transform: rotate(90deg); }
+  .stuck > summary .s-count { font-family: var(--w-font-mono); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; }
+  .stuck-body { padding-top: 16px; }
+  .stuck-body .note em { color: #fff; font-style: normal; font-weight: 600; }
+  .stuck-body a { color: var(--w-hero-teal); }
+
+  /* ─── Footer: what to build next ─── */
+  .next { padding: 48px 0; }
+  .next h2 { font-family: var(--w-font-heading); font-size: clamp(24px, 3vw, 32px); font-weight: 600; margin-bottom: 12px; }
+  .next p { color: rgba(255,255,255,0.72); margin-bottom: 24px; max-width: 640px; }
+  .next-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .next-card {
+    display: block; padding: 18px 20px; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 11px; text-decoration: none; color: #fff; transition: all 0.2s;
+  }
+  .next-card:hover { border-color: rgba(103,234,221,0.3); background: rgba(103,234,221,0.04); transform: translateY(-2px); }
+  .next-card .nc-title { font-family: var(--w-font-heading); font-size: 15.5px; font-weight: 600; margin-bottom: 4px; }
+  .next-card .nc-desc { font-size: 13.5px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .next-card.soon .nc-title::after { content: "soon"; font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w-icecream); border: 1px solid rgba(252,152,103,0.4); border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; }
+
+  footer { padding: 48px 0 40px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,0.3); }
+  .footer-bottom .footer-note { font-family: var(--w-font-mono); font-size: 12px; }
+  .footer-bottom a { color: rgba(255,255,255,0.5); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--w-hero-teal); }
+
+  @media (max-width: 680px) {
+    nav .nav-links { display: none; }
+    .next-grid { grid-template-columns: 1fr; }
+    .step-cmd { display: none; }
+    .step-title { white-space: normal; }
+    .lane-agent { margin-left: 8px; padding-left: 12px; }
+    .qs-hero { padding: 48px 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="atmosphere"></div>
+
+<!-- ────────── Nav ────────── -->
+<div class="container--wide">
+  <nav>
+    <a href="./index.html" class="logo">
+      <img src="./assets/workato-logo-teal.svg" alt="Workato Labs" class="labs-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="./index.html#install">Install</a></li>
+      <li><a href="./quickstart.html" class="current">Quickstart</a></li>
+      <li><a href="./index.html#toolkit">Toolkit</a></li>
+      <li><a href="./index.html#repos">Repos</a></li>
+      <li><a href="./principles.html">Principles</a></li>
+      <li><a href="https://github.com/workato-devs/labs/discussions">Discuss</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Hero ────────── -->
+<div class="container">
+  <header class="qs-hero">
+    <span class="kicker">Quickstart</span>
+    <h1>One prompt in.<br>One <em>proven automation</em> out.</h1>
+    <p class="lead">
+      You set up, hand off one sentence, and your agent runs the build loop — compose, lint, deploy,
+      and call the live <code>onboard_new_hire</code> endpoint to prove it works. <strong>You watch as
+      much as you want and step in at the checkpoints.</strong> Anyone can wrap one API as a tool;
+      composing a governed Salesforce&nbsp;+&nbsp;Slack orchestration into one agent-callable tool is
+      what only Workato makes possible.
+    </p>
+    <div class="portability">
+      Examples use one agent for concreteness, but the toolkit is <strong>open by design</strong> — no
+      vendor-specific commands, nothing tied to one agent. Use it with Claude, Cursor, Windsurf, Codex, or
+      any other. The toolkit is the constant; the agent is your choice.
+    </div>
+  </header>
+</div>
+
+<!-- ────────── The flow ────────── -->
+<div class="container">
+  <section class="flow">
+
+    <div class="flow-tools">
+      <div class="flow-legend">
+        <span><i class="lg-you"></i> you</span>
+        <span><i class="lg-agent"></i> your agent</span>
+        <span><i class="lg-move"></i> your move</span>
+      </div>
+      <button class="expand-all" id="expandAll" type="button">Expand all</button>
+    </div>
+
+    <div class="phase">You set up</div>
+
+    <!-- 0 — Install + verify -->
+    <details class="step step--you">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">0</span>
+        <span class="step-title">Install &amp; verify</span>
+        <span class="step-role">you</span>
+        <code class="step-cmd">brew / scoop install · wk version</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <div class="code-wrap"><div class="code-block">
+<span class="comment"># macOS — Homebrew</span><br>
+<span class="prompt">$ </span><span class="cmd">brew install</span> <span class="string">workato-devs/tap/wk workato-devs/tap/recipe-lint</span><br>
+<span class="comment"># Windows — Scoop</span><br>
+<span class="prompt">&gt; </span><span class="cmd">scoop bucket add</span> workato-devs <span class="string">https://github.com/workato-devs/scoop-bucket</span><br>
+<span class="prompt">&gt; </span><span class="cmd">scoop install</span> wk recipe-lint<br>
+<br>
+<span class="comment"># then, on either OS:</span><br>
+<span class="prompt">$ </span><span class="cmd">wk plugins install</span> recipe-lint             <span class="comment"># register lint as a wk command</span><br>
+<span class="prompt">$ </span><span class="cmd">code</span> <span class="flag">--install-extension</span> <span class="string">WorkatoLabs.recipe-visualizer</span>  <span class="comment"># or cursor / windsurf</span><br>
+<span class="prompt">$ </span><span class="cmd">wk</span> version <span class="cmd">&amp;&amp; wk plugins list</span>           <span class="comment"># verify — should list recipe-lint</span>
+        </div></div>
+        <div class="note note--tip">
+          <span class="note-label">No Workato workspace yet?</span>
+          <p>Start free — <a href="https://app.trial.workato.com/users/sign_up_trial?utm_term=sign_in">sign up for a Workato trial</a>
+          (a Developer Sandbox you authenticate to with <code>--region trial</code> in step 1).</p>
+        </div>
+        <p>You'll also need a Slack account you can test in and a Salesforce demo account. Make a channel
+        called <code>#team-welcome</code> in Slack.</p>
+      </div>
+    </details>
+
+    <!-- 1 — Auth -->
+    <details class="step step--you">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">1</span>
+        <span class="step-title">Authenticate</span>
+        <span class="step-role">you</span>
+        <code class="step-cmd">wk auth login --region trial</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">wk auth login</span> <span class="flag">--region</span> <span class="string">trial</span><br>
+<span class="comment"># then, at the prompts:</span><br>
+<span class="comment">#   API token:         paste your wrk_… token</span><br>
+<span class="comment">#   Environment:       name it yourself (e.g. dev)</span><br>
+<span class="comment">#   Profile name [..]: enter to accept the suggestion, or type your own</span><br>
+<br>
+<span class="prompt">$ </span><span class="cmd">wk auth status</span>  <span class="comment"># verify connectivity</span>
+        </div></div>
+        <div class="note note--tip">
+          <span class="note-label">Where the token comes from</span>
+          <p>In Workato: <strong>Workspace admin → API clients</strong>. Create a <em>Client Role</em> with
+          recipe / connection / lifecycle permissions, create an <em>API Client</em> with that role, and copy
+          the token (starts with <code>wrk</code>, shown only once).
+          <a href="https://docs.workato.com/en/platform-cli.html#authentication">Workato docs →</a></p>
+        </div>
+        <div class="note note--warn">
+          <span class="note-label">Set the region on the command, not at a prompt</span>
+          <p><code>wk auth login</code> bare fails before you can paste your token — <code>--region</code> must
+          be a flag. Use <code>trial</code> for the free sandbox; on a paid workspace use your data center
+          (<code>us</code>, <code>eu</code>, <code>jp</code>, <code>au</code>, <code>sg</code>, <code>il</code>, <code>cn</code>).</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2 — Load skills -->
+    <details class="step step--you">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">2</span>
+        <span class="step-title">Load the recipe skills</span>
+        <span class="step-role">you</span>
+        <code class="step-cmd">git clone …/recipe-skills.git</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">git clone</span> <span class="string">https://github.com/workato-devs/recipe-skills.git</span><br>
+<span class="comment"># then load the base skill + Salesforce + Slack into your agent —</span><br>
+<span class="comment"># loading differs by agent, so follow the repo's quick start:</span><br>
+<span class="comment"># https://github.com/workato-devs/recipe-skills#quick-start</span>
+        </div></div>
+      </div>
+    </details>
+
+    <!-- 3 — Create project -->
+    <details class="step step--you">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">3</span>
+        <span class="step-title">Create your project</span>
+        <span class="step-role">you</span>
+        <code class="step-cmd">wk init</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">cd</span> ~/github            <span class="comment"># or wherever you keep working projects</span><br>
+<span class="prompt">$ </span><span class="cmd">wk init</span><br>
+<span class="comment"># prompts (both free-text you type):</span><br>
+<span class="comment">#   Project name:   type a name (becomes the new directory)</span><br>
+<span class="comment">#   Auth profile:   the profile from step 1 (run `wk auth list` if unsure)</span><br>
+<span class="prompt">$ </span><span class="cmd">cd</span> <span class="string">&lt;project-name&gt;</span>
+        </div></div>
+        <p>Scaffold the project before you prompt, so the agent writes the recipe straight into a folder
+        already mapped to your workspace — then deploying later is just <code>wk push</code>, no setup mid-flow.</p>
+      </div>
+    </details>
+
+    <!-- 4 — Prompt -->
+    <details class="step step--you">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">4</span>
+        <span class="step-title">Prompt your agent</span>
+        <span class="step-role">you → agent</span>
+        <code class="step-cmd">“Build a Workato automation that…”</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <div class="code-wrap"><div class="code-block">
+<span class="cmd">Build a Workato automation that takes a new hire's email, looks up</span><br>
+<span class="cmd">their User record in Salesforce, adds them to the #team-welcome Slack</span><br>
+<span class="cmd">channel, and posts a welcome message introducing them to the team.</span><br>
+<span class="cmd">Expose it through an API-endpoint trigger named onboard_new_hire, then</span><br>
+<span class="cmd">deploy it and call the live endpoint to confirm it works end to end.</span>
+        </div></div>
+        <div class="note note--tip">
+          <span class="note-label">The agent grounds before it writes</span>
+          <p>Guided by the skills, your agent confirms your exact connection names and checks your Salesforce
+          objects/fields exist. It asks — it doesn't auto-detect your workspace, so answer with your real
+          connection names.</p>
+        </div>
+      </div>
+    </details>
+
+    <div class="phase phase--agent">Your agent builds — behind the scenes</div>
+    <div class="lane-agent">
+
+      <!-- 5 — Compose -->
+      <details class="step step--agent">
+        <summary>
+          <span class="step-dot"></span><span class="step-n">5</span>
+          <span class="step-title">Compose the recipe</span>
+          <span class="step-role">agent</span>
+          <code class="step-cmd">onboard_new_hire.recipe.json</code>
+          <span class="step-chev">▸</span>
+        </summary>
+        <div class="step-body">
+          <p>The agent writes <code>onboard_new_hire.recipe.json</code> — the multi-system flow in one file:</p>
+          <ul>
+            <li><strong>Salesforce</strong> — find the new hire's <code>User</code> record by email.</li>
+            <li><strong>Slack</strong> — look them up, add them to <code>#team-welcome</code>, post the welcome message.</li>
+            <li><strong>API-endpoint trigger</strong> — so the recipe can be called as a tool in step 8.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- 6 — Lint -->
+      <details class="step step--agent">
+        <summary>
+          <span class="step-dot"></span><span class="step-n">6</span>
+          <span class="step-title">Lint-fix loop</span>
+          <span class="step-role">agent</span>
+          <code class="step-cmd">wk lint onboard_new_hire.recipe.json</code>
+          <span class="step-chev">▸</span>
+        </summary>
+        <div class="step-body">
+          <div class="note note--gate">
+            <span class="note-label">Why the agent runs this</span>
+            <p>Lint is a <strong>push gate</strong> — <code>wk push</code> refuses to deploy a recipe with
+            errors. It's deterministic validation the agent can't fake (datapill syntax, schemas, control-flow),
+            so the agent runs it and fixes until it's clean.</p>
+          </div>
+          <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">wk lint</span> <span class="string">onboard_new_hire.recipe.json</span> <span class="flag">--skills-path</span> <span class="string">./recipe-skills/skills</span><br>
+<span class="comment"># exit 0 = pass (warnings ok)   1 = lint errors   2 = invalid input</span>
+          </div></div>
+        </div>
+      </details>
+
+    </div><!-- /lane-agent -->
+
+    <!-- your move — Inspect -->
+    <details class="step step--move">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">◉</span>
+        <span class="step-title">Inspect the graph</span>
+        <span class="step-role">your move · optional</span>
+        <code class="step-cmd">preview icon · Cmd+Shift+V</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <div class="code-wrap"><div class="code-block">
+<span class="comment"># Open onboard_new_hire.recipe.json, then any of:</span><br>
+<span class="comment"># — click the preview icon, top-right of the editor (like Markdown preview)</span><br>
+<span class="cmd">Cmd+Shift+V</span>  <span class="comment"># (Ctrl+Shift+V on Windows/Linux)</span><br>
+<span class="comment"># — or right-click the file → "Visualize Recipe"</span>
+        </div></div>
+        <p>Render the recipe as an interactive graph — click a node for its inputs/outputs and jump to the
+        source line. Watch as much or as little as you want; an agent-confident run can skip straight to deploy.</p>
+      </div>
+    </details>
+
+    <div class="lane-agent">
+
+      <!-- 7 — Push -->
+      <details class="step step--agent">
+        <summary>
+          <span class="step-dot"></span><span class="step-n">7</span>
+          <span class="step-title">Push / deploy</span>
+          <span class="step-role">agent</span>
+          <code class="step-cmd">wk push</code>
+          <span class="step-chev">▸</span>
+        </summary>
+        <div class="step-body">
+          <div class="note note--tip">
+            <span class="note-label">Push creates your connections for you</span>
+            <p>Deploying goes through Workato's <strong>packaging APIs</strong>, so the platform creates any
+            missing Salesforce and Slack connections (and folders) as part of importing the recipe — nothing to
+            pre-build in the UI. You authorize them in the next step.</p>
+          </div>
+          <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">wk push</span> <span class="flag">--dry-run</span>             <span class="comment"># preview what will be created</span><br>
+<span class="prompt">$ </span><span class="cmd">wk push</span>                       <span class="comment"># lints, then deploys</span>
+          </div></div>
+        </div>
+      </details>
+
+    </div><!-- /lane-agent -->
+
+    <!-- your move — Authorize + start -->
+    <details class="step step--move">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">◉</span>
+        <span class="step-title">Authorize connections</span>
+        <span class="step-role">your move</span>
+        <code class="step-cmd">recipe → Connections → sign in</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <p>Authorize the connections the push just created: open the recipe in Workato, click the
+        <strong>Connections</strong> tab, click each connection, and complete its sign-in in the right-hand panel.</p>
+        <p>That's your only hands-on bit here — once the connections are live, your agent takes over again to
+        start the recipe and run the self-test.</p>
+      </div>
+    </details>
+
+    <div class="lane-agent">
+
+      <!-- 8 — Expose + self-test -->
+      <details class="step step--agent">
+        <summary>
+          <span class="step-dot"></span><span class="step-n">8</span>
+          <span class="step-title">Expose &amp; self-test</span>
+          <span class="step-role">agent, alone</span>
+          <code class="step-cmd">wk recipes start · wk api … · curl</code>
+          <span class="step-chev">▸</span>
+        </summary>
+        <div class="step-body">
+          <div class="note note--tip">
+            <span class="note-label">The self-test, end to end</span>
+            <p>With its connections authorized, your agent starts the recipe, wraps it as a live API endpoint,
+            mints a key (printed once at creation, so it captures it), and calls the endpoint over HTTP —
+            terminal-only, no human, no UI.</p>
+          </div>
+          <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">wk recipes start</span> <span class="string">&lt;recipe-id&gt;</span>   <span class="comment"># connections are live now → start it (id from `wk status`)</span>
+          </div></div>
+          <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">wk api collections create</span> <span class="flag">--name</span> <span class="string">"Onboarding API"</span> <span class="flag">--json</span>   <span class="comment"># prints the collection's base URL</span><br>
+<span class="prompt">$ </span><span class="cmd">wk api endpoints create</span> <span class="string">endpoint.json</span> <span class="flag">--collection</span> <span class="string">&lt;id&gt;</span>      <span class="comment"># bind POST /onboard → your recipe</span><br>
+<span class="prompt">$ </span><span class="cmd">wk api endpoints enable</span> <span class="string">&lt;endpoint-id&gt;</span><br>
+<span class="prompt">$ </span><span class="cmd">wk api clients create</span> <span class="flag">--name</span> <span class="string">"Onboarding"</span> <span class="flag">--collections</span> <span class="string">&lt;id&gt;</span><br>
+<span class="prompt">$ </span><span class="cmd">wk api clients keys create</span> <span class="string">&lt;client-id&gt;</span> <span class="flag">--name</span> <span class="string">selftest</span> <span class="flag">--json</span>   <span class="comment"># ← auth token, shown once</span>
+          </div></div>
+          <div class="note note--tip">
+            <span class="note-label">What's in <code>endpoint.json</code></span>
+            <p>A four-field file the agent writes — <code>name</code>, <code>method</code> (<code>POST</code>),
+            <code>path</code> (e.g. <code>onboard</code>), and <code>flow_id</code> (your recipe's ID).</p>
+          </div>
+          <p>Then the agent calls the live endpoint and reads the result:</p>
+          <div class="code-wrap"><div class="code-block">
+<span class="prompt">$ </span><span class="cmd">curl</span> <span class="flag">-X</span> POST <span class="string">&lt;collection-base-url&gt;/onboard</span> \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="flag">-H</span> <span class="string">"API-TOKEN: &lt;key&gt;"</span> <span class="flag">-H</span> <span class="string">"Content-Type: application/json"</span> \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="flag">-d</span> <span class="string">'{"email":"newhire@example.com"}'</span><br>
+<span class="comment"># → {"success":true,"slack_user_id":"U…","channel_id":"C…","message_ts":"…"}</span>
+          </div></div>
+          <div class="note note--tip">
+            <span class="note-label">Optional — also expose it as an MCP tool</span>
+            <p>The same collection can back an MCP server for chat-based agent clients:
+            <code>wk mcp servers create --name "Onboarding" --folder-id &lt;id&gt; --collection &lt;id&gt;</code>.
+            Reveal its token in the UI (<strong>AI&nbsp;Hub → MCP&nbsp;Servers → User&nbsp;access →
+            Developer&nbsp;MCP&nbsp;Token</strong>), then <code>claude mcp add onboarding &lt;mcp-url&gt;</code>.
+            The curl self-test already proved it works — MCP just makes it callable from chat clients.</p>
+          </div>
+        </div>
+      </details>
+
+    </div><!-- /lane-agent -->
+
+    <!-- your move — Confirm in Slack -->
+    <details class="step step--move">
+      <summary>
+        <span class="step-dot"></span><span class="step-n">◉</span>
+        <span class="step-title">Confirm it in Slack</span>
+        <span class="step-role">your move</span>
+        <code class="step-cmd">open #team-welcome</code>
+        <span class="step-chev">▸</span>
+      </summary>
+      <div class="step-body">
+        <p>The <code>success:true</code> response is the machine's word for it — now see it for yourself. Open
+        Slack and go to <code>#team-welcome</code>: your demo new hire should be a member, with a welcome
+        message introducing them to the team. That's the Salesforce&nbsp;+&nbsp;Slack orchestration you built,
+        running on one real call.</p>
+      </div>
+    </details>
+
+    <!-- The payoff — always visible -->
+    <div class="win">
+      <span class="win-label">What success looks like</span>
+      <p>Your agent might take a different path each run — but a successful one ends the same way: it calls
+      <strong>onboard_new_hire</strong> over HTTP, gets <code>success:true</code> back, and the demo new hire
+      appears in <code>#team-welcome</code>. That's a real governed call against the deployed endpoint — see
+      it, and the Salesforce&nbsp;+&nbsp;Slack orchestration you built is working.</p>
+    </div>
+
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── If your agent gets stuck (collapsible) ────────── -->
+<div class="container">
+  <section class="next">
+    <details class="stuck">
+      <summary>
+        <span class="s-chev">▸</span>
+        If your agent gets stuck
+        <span class="s-count">· 5 tested redirects</span>
+      </summary>
+      <div class="stuck-body">
+        <p style="color: rgba(255,255,255,0.72); margin-bottom: 16px;">The loop is forgiving — when the agent wanders, one line of redirection puts it back. These are the snags worth a ready-made nudge:</p>
+
+        <div class="note note--warn">
+          <span class="note-label">It built a "callable recipe" or "genie skill" instead of an endpoint</span>
+          <p>Redirect: <em>"Rebuild it with an API-endpoint trigger."</em> A recipe-function or genie skill can't be
+          self-tested over plain HTTP, and genie skills force identity-based MCP auth that the CLI can't hand you a token for.</p>
+        </div>
+
+        <div class="note note--warn">
+          <span class="note-label">The Salesforce search fails with <code>MALFORMED_QUERY</code> / "field not present"</span>
+          <p>Redirect: <em>"Keep <code>sobject_name</code>, <code>limit</code>, and <code>field_list</code> out of the
+          action's <code>extended_input_schema</code> — list only the SObject's real fields."</em> Those are reserved
+          config keys; in the schema they leak into the SOQL <code>WHERE</code> clause.</p>
+        </div>
+
+        <div class="note note--warn">
+          <span class="note-label">It can't add the new hire to <code>#team-welcome</code></span>
+          <p>Redirect: <em>"Use <code>invite_user_to_conversation</code> (not <code>…_to_channel</code>), and resolve the
+          channel to an ID via <code>conversations.list</code> — there's no add-by-name."</em></p>
+        </div>
+
+        <div class="note note--warn">
+          <span class="note-label">A Slack step returns <code>nil</code> / "no method 'where' for nil"</span>
+          <p>Redirect: <em>"Native Slack adhoc output isn't body-wrapped — reference <code>["channels"]</code>, not
+          <code>["body","channels"]</code>."</em> (Only the Workbot <code>slack_bot</code> adhoc uses a <code>body</code> wrapper.)</p>
+        </div>
+
+        <div class="note note--warn">
+          <span class="note-label"><code>wk auth login</code> 401s before you can paste the token</span>
+          <p>Redirect: <em>"Pass <code>--region</code> as a flag (e.g. <code>--region trial</code>)"</em> — it can't be
+          answered at a prompt, and a token from one region 401s against another.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── What to build next ────────── -->
+<div class="container">
+  <section class="next">
+    <h2>What to build next</h2>
+    <p>You composed a governed, multi-system tool from one sentence. The same loop covers everything else — point your agent at another connector skill and go.</p>
+    <div class="next-grid">
+      <a class="next-card" href="https://github.com/workato-devs/recipe-skills/tree/main/skills">
+        <div class="nc-title">More connector skills</div>
+        <div class="nc-desc">Asana, Gmail, Jira, Stripe, Datatable — each one build away.</div>
+      </a>
+      <a class="next-card soon" href="https://github.com/workato-devs/labs/discussions">
+        <div class="nc-title">Community examples</div>
+        <div class="nc-desc">A gallery of real builds — share yours, borrow others'.</div>
+      </a>
+      <a class="next-card" href="./principles.html">
+        <div class="nc-title">Why we build this way</div>
+        <div class="nc-desc">The five principles behind the toolkit.</div>
+      </a>
+      <a class="next-card" href="https://github.com/workato-devs/labs/discussions">
+        <div class="nc-title">Bring us a wall you hit</div>
+        <div class="nc-desc">Community feedback flows straight into the roadmap.</div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<div class="teal-rule"></div>
+
+<!-- ────────── Footer ────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Workato, Inc. · <a href="./index.html">Workato Labs</a></span>
+      <span class="footer-note">Experimental — community feedback welcome, no SLA.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Expand / collapse all steps
+(function () {
+  var btn = document.getElementById('expandAll');
+  if (!btn) return;
+  var steps = Array.prototype.slice.call(document.querySelectorAll('details.step'));
+  function sync() {
+    var anyClosed = steps.some(function (s) { return !s.open; });
+    btn.textContent = anyClosed ? 'Expand all' : 'Collapse all';
+  }
+  btn.addEventListener('click', function () {
+    var anyClosed = steps.some(function (s) { return !s.open; });
+    steps.forEach(function (s) { s.open = anyClosed; });
+    sync();
+  });
+  steps.forEach(function (s) { s.addEventListener('toggle', sync); });
+  sync();
+})();
+
+// Copy-to-clipboard on every code block (mirrors index.html behavior)
+(function () {
+  var COPY_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+
+  function extract(block) {
+    var lines = [''];
+    block.childNodes.forEach(function (node) {
+      if (node.nodeName === 'BR') { lines.push(''); return; }
+      if (node.nodeType === 1 && node.classList && node.classList.contains('prompt')) return;
+      lines[lines.length - 1] += node.textContent;
+    });
+    lines = lines.map(function (l) { return l.replace(/\s+$/, ''); });
+    var out = [];
+    lines.forEach(function (l) {
+      if (l.trim() === '' && (out.length === 0 || out[out.length - 1] === '')) return;
+      out.push(l);
+    });
+    while (out.length && out[out.length - 1] === '') out.pop();
+    return out.join('\n');
+  }
+
+  document.querySelectorAll('.code-block').forEach(function (block) {
+    var wrap = block.closest('.code-wrap') || block.parentNode;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.setAttribute('aria-label', 'Copy to clipboard');
+    btn.innerHTML = COPY_SVG + '<span>Copy</span>';
+    wrap.appendChild(btn);
+
+    btn.addEventListener('click', function () {
+      var text = extract(block);
+      var done = function () {
+        btn.classList.add('copied');
+        btn.querySelector('span').textContent = 'Copied';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.querySelector('span').textContent = 'Copy';
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+
+</body>
+</html>
