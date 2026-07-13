@@ -11,7 +11,7 @@ An open-source developer toolkit for building, validating, visualizing, and mana
 Four tools that replace the loop of guess, push, break, repeat — one quality loop shared by a human developer and a coding agent.
 
 <p align="center">
-  <img src="docs/diagrams/developer-loop.svg" alt="The Developer Loop: Recipe Skills feeds context to the AI Agent and lint rules to wk lint. The AI Agent writes a recipe, the Developer inspects it in the Recipe Visualizer, wk lint validates it; on pass it ships via wk push, on fail it routes to Fix and re-lint." width="760">
+  <img src="docs/diagrams/developer-loop.svg" alt="The Developer Loop: Workato Developer Skills feeds context to the AI Agent and lint rules to wk lint. The AI Agent writes a recipe, the Developer inspects it in the Recipe Visualizer, wk lint validates it; on pass it ships via wk push, on fail it routes to Fix and re-lint." width="760">
 </p>
 
 **Agent writes recipe** (recipe-skills) → **Developer inspects** (visualizer) → **Linter validates** (`wk lint`) → **CLI pushes** (`wk push`)
@@ -137,7 +137,7 @@ A unified CLI for Workato platform operations and recipe development. `wk pull`,
 **Recipe Linter** · Go
 Deterministic validation via `wk lint`. Catches datapill syntax errors, schema mismatches, and structural issues that agents can't self-validate.
 
-**Recipe Skills** · Markdown
+**Workato Developer Skills** · Markdown
 Agent-consumable knowledge for recipe authoring. Connector config, datapill syntax, control flow, error handling. Also home to connector-specific lint rules. Point your coding agent at the skills directory.
 
 **Recipe Visualizer** · VS Code extension
