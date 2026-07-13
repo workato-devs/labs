@@ -91,7 +91,7 @@ which recipe-lint
 
 </details>
 
-### 3. Clone the recipe skills
+### 3. Clone Workato Developer Skills
 
 Agent-consumable knowledge for recipe authoring — connector config, datapill syntax, control flow, schemas. Also where connector-specific lint rules live. Point your coding agent here.
 
@@ -147,12 +147,12 @@ IDE extension rendering recipe JSON as interactive workflow graphs. Click a node
 
 ## Repositories
 
-| Repo | Description |
-|------|-------------|
-| [workato-labs](https://github.com/workato-devs/labs) | Hub — landing site, docs, install guide |
-| [wk](https://github.com/workato-devs/wk) | CLI — Go binary, workspace ops |
-| [recipe-skills](https://github.com/workato-devs/recipe-skills) | Agent knowledge — connector skill sets |
-| [recipe-lint](https://github.com/workato-devs/recipe-lint) | Recipe linter — deterministic validation |
+| Repo                                                                   | Description                               |
+| ---------------------------------------------------------------------- | ----------------------------------------- |
+| [workato-labs](https://github.com/workato-devs/labs)                   | Hub — landing site, docs, install guide   |
+| [wk](https://github.com/workato-devs/wk)                               | CLI — Go binary, workspace ops            |
+| [recipe-skills](https://github.com/workato-devs/recipe-skills)         | Agent knowledge — connector skill sets    |
+| [recipe-lint](https://github.com/workato-devs/recipe-lint)             | Recipe linter — deterministic validation  |
 | [recipe-visualizer](https://github.com/workato-devs/recipe-visualizer) | IDE extension — interactive recipe graphs |
 
 ---
