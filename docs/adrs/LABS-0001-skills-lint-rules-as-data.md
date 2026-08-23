@@ -1,6 +1,7 @@
 # Recipe Skills Declare Lint Rules as Data
 
 **Author(s):** Zayne Turner, Claude [role: assistant; harness: Claude Code; model: Opus 4.8]
+**Amended-by:** Codex [role: assistant; harness: Codex; model: GPT-5] — August 2026
 **Status:** Accepted
 **Date:** June 17, 2026
 **Implemented:** June 17, 2026 — retroactive record of behavior already shipping (see Consequences)
@@ -122,5 +123,31 @@ patterns. Those are for agents and humans; the data contract is `lint-rules.json
 - Whether to populate `action_rules` with declarative assertions so skills can ship genuinely new
   *checks* as data — closing the gap above — or to keep skills limited to name catalogs. Either is a
   real decision and should get its own ADR or an amendment, not a silent default.
+
+> **Amendment (August 2026): connector action output schemas join the cross-repo data contract.**
+> Live Workato connector metadata and stopped canonical recipe exports showed that connector-owned
+> transport fields can be available at runtime while absent from a recipe's non-empty, partial
+> `extended_output_schema`. The original catalog-only contract cannot model that case, so
+> `lint-rules.json` may now add `action_output_schemas`, keyed by action name:
+>
+> - `kind: "static"` declares a complete closed `fields` schema for an action.
+> - `kind: "dynamic"` records an action whose response shape is runtime-defined and may declare
+>   stable connector-owned `intrinsic_fields`.
+>
+> Recipe EOS remains authoritative for roots it declares. Audited intrinsic roots may augment a
+> partial EOS; when EOS is absent, static connector schemas are closed and dynamic schemas validate
+> only known intrinsics while accepting unknown runtime roots conservatively. Missing, malformed,
+> or unknown per-action declarations are skipped without disabling sibling connector data, and
+> triggers remain outside this fallback. The field is additive and does not assign new semantics to
+> the existing top-level `version` value, so older skills and linter binaries remain compatible.
+>
+> This extends the producer/consumer relationship beyond the three original rules: connector data
+> now also informs `EIS_MIRRORS_INPUT` (connector-owned inputs) and `DP_PATH_RESOLVES` (audited action
+> outputs). Output metadata must be verified from current Workato connector metadata, UI schemas,
+> or canonical exports and carry provenance in the producing skill. Implementation is tracked by
+> `recipe-lint#24` and `recipe-skills#21`; their implementation PRs must be linked here when opened.
+> Connector-owned inputs may be action-scoped through `action_internals`; provider-wide
+> `connector_internals` remains supported. Action scoping prevents evidence for one action from
+> weakening EIS checks on sibling actions or triggers.
 
 <!-- When this evolves, add a dated amendment in place; do not rewrite the above. -->
