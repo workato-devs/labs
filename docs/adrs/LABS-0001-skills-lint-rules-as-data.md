@@ -145,7 +145,8 @@ patterns. Those are for agents and humans; the data contract is `lint-rules.json
 > now also informs `EIS_MIRRORS_INPUT` (connector-owned inputs) and `DP_PATH_RESOLVES` (audited action
 > outputs). Output metadata must be verified from current Workato connector metadata, UI schemas,
 > or canonical exports and carry provenance in the producing skill. Implementation is tracked by
-> `recipe-lint#24` and `recipe-skills#21`; their implementation PRs must be linked here when opened.
+> `recipe-lint#24` / [recipe-lint#35](https://github.com/workato-devs/recipe-lint/pull/35) and
+> `recipe-skills#21` / [recipe-skills#29](https://github.com/workato-devs/recipe-skills/pull/29).
 > Connector-owned inputs may be action-scoped through `action_internals`; provider-wide
 > `connector_internals` remains supported. Action scoping prevents evidence for one action from
 > weakening EIS checks on sibling actions or triggers.
