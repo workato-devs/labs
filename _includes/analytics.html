@@ -1,0 +1,27 @@
+{%- comment -%}
+  Google Analytics (GA4). Production builds only, and skipped on per-PR previews
+  (pr-preview.yml also builds with JEKYLL_ENV=production, under /pr-preview/pr-N).
+
+  Deliberately minimal privacy posture until we align with marketing/legal:
+  - Not loaded at all if the browser sends Do Not Track or Global Privacy Control.
+  - No ad storage, ad personalization, or Google signals; traffic measurement only.
+  Revisit (consent banner / Consent Mode) once marketing/legal weigh in.
+{%- endcomment -%}
+{%- if jekyll.environment == "production" and site.ga_measurement_id -%}
+{%- unless site.baseurl contains "pr-preview" -%}
+<script>
+  (function () {
+    if (navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl) return;
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'});
+    gtag('js', new Date());
+    gtag('config', '{{ site.ga_measurement_id }}', {allow_google_signals: false, allow_ad_personalization_signals: false});
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id={{ site.ga_measurement_id }}';
+    document.head.appendChild(s);
+  })();
+</script>
+{%- endunless -%}
+{%- endif -%}
