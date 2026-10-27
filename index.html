@@ -1037,6 +1037,20 @@
         }
       }
     </style>
+  <script>
+  (function () {
+    if (navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl) return;
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'});
+    gtag('js', new Date());
+    gtag('config', 'G-SYSZYQ9T9X', {allow_google_signals: false, allow_ad_personalization_signals: false});
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-SYSZYQ9T9X';
+    document.head.appendChild(s);
+  })();
+</script>
   </head>
   <body>
     <!-- ────────── Cover band: nav + hero ────────── -->
