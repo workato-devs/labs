@@ -3,6 +3,9 @@ description: An open-source developer toolkit for building, validating, visualiz
 url: https://workato-devs.github.io
 baseurl: /labs
 
+# Google Analytics (GA4) measurement ID; see _includes/analytics.html
+ga_measurement_id: G-SYSZYQ9T9X
+
 exclude:
   - README.md
   - Gemfile
